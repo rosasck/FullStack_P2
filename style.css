@@ -1,0 +1,31 @@
+header {
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-buttons {
+    margin-left: auto;;
+}
+
+.saved-pets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mini-card {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    width: 700px;
+}
+
+.mini-pet-desc {
+    padding: 10px;
+}
+
+.mini-pet-pic {
+    object-fit: cover;
+    width: 100px;
+    border-right: 1px solid black;
+}
