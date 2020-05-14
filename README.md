@@ -4,4 +4,4 @@ Pet-Tential
 Katie Rosas, Taylor Atkins, Vivian Killian
 # Deployed Site URL
 https://pet-tential.herokuapp.com/
-# 
+# What does Pet-tential do
