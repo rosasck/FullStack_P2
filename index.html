@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-signin-client_id" content="363237205639-ge46kbrpc38c094k67jisqs61bljf6gq.apps.googleusercontent.com"/>
+    
+    <!--363237205639-ge46kbrpc38c094k67jisqs61bljf6gq.apps.googleusercontent.com -->
     <link rel="stylesheet" href="style.css" />
+     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title>Pet-Tential</title>
   </head>
   <body>
@@ -15,7 +19,7 @@
             <p>Welcome the user, what is this website, warn about guest browsing...</p>
         </div>
         <div class = "btn-container">
-            <button>Sign-in with Google</button>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <button>Browse as a guest</button>
         </div>
     </section>
