@@ -1,0 +1,1 @@
+{"version":3,"sources":["card-style.css"],"names":[],"mappings":"AAAA,KACI,gDACJ,CACA,MACI,WACJ,CACA,YACI,uDACJ","file":"main.ef149054.chunk.css","sourcesContent":["body{\n    background: radial-gradient(#e5e5e5,#ffffff, #e5e5e5);\n}\n.card{\n    width: 20rem;\n}\n.card:hover{\n    box-shadow: 5px 10px 20px 1px rgb(0,0,0,.253)!important ;\n}"]}
