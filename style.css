@@ -7,6 +7,12 @@ header {
     margin-left: auto;;
 }
 
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .saved-pets {
     display: flex;
     flex-direction: column;
