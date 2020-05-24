@@ -2,6 +2,10 @@
     background-color: #FFCB69;
 }
 
+body {
+    font-family: Sans-Serif;
+}
+
 @font-face {
     font-family:"Carosello";
     src: url(Carosello-Regular.ttf) format("truetype");
@@ -20,7 +24,7 @@ header {
     font-weight: lighter;
     text-align: center;
     font-family: "Carosello";  
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .title-small {
@@ -70,7 +74,15 @@ header {
 }
 
 .blurb {
+    width: 450px;
     padding: 10px;
+    /*background-color: #F4978E;*/
+    border-radius: 8px;
+}
+
+p {
+    text-indent: 20px;
+    color: rgb(82, 65, 54);
 }
 
 .saved-pets {
