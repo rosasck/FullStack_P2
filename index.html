@@ -16,7 +16,12 @@
   </head>
   <body>
     <header>
-        <h1>Pet-Tential</h1>
+      <!--
+        <h1><span class = "fontawesome-star star"></span> <span>Pet-Tential</span>
+        <span class = "fontawesome-star star"></span>
+      </h1>
+      -->
+      <div class = "title-text">Pet-Tential</div>
     </header>
     <section class = "welcome">
         <div class = "blurb">
@@ -24,7 +29,7 @@
         </div>
         <div class = "btn-container">
             <div class="g-signin2" data-onsuccess="./feed.html" onclick="window.location.href='./feed.html'"></div>
-            <input type="button" onclick="window.location.href='./feed.html'" value = "Browse as a guest">
+            <input class = "guest-btn" type="button" onclick="window.location.href='./feed.html'" value = "Browse as a guest">
         </div>
     </section>
   </body>

@@ -1,16 +1,76 @@
+* {
+    background-color: #FFCB69;
+}
+
+@font-face {
+    font-family:"Carosello";
+    src: url(Carosello-Regular.ttf) format("truetype");
+}
+
 header {
     display: flex;
-    flex-direction: row;
+    flex-direction: row;  
+    align-content: center;
+    justify-content: center;
+}
+
+.title-text {
+    font-size: 100px;
+    color: #997B66;
+    font-weight: lighter;
+    text-align: center;
+    font-family: "Carosello";  
+    margin-top: 20px;
+}
+
+.title-small {
+    font-family: "Carosello"; 
+    font-weight: lighter;
+    color: #997B66;
+    font-size: 40px;
+    padding-left: 8px;
 }
 
 .nav-buttons {
-    margin-left: auto;;
+    margin-left: auto;
 }
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.guest-btn {
+    border-radius: 1px;
+    border-style: none;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+    transition: background-color .218s,border-color .218s,box-shadow .218s;
+    color: #757575;
+    font-size: 13px;
+    font-family: Roboto,arial,sans-serif;
+    font-weight: 500;
+    letter-spacing: .21px;
+    margin-left: 6px;
+    margin-right: 6px;
+    vertical-align: top;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.guest-btn:hover{ 
+    box-shadow: 0 0 6px rgba(35, 173, 278, 1);
+} 
 
 .welcome {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
+}
+
+.blurb {
+    padding: 10px;
 }
 
 .saved-pets {
@@ -34,4 +94,10 @@ header {
     object-fit: cover;
     width: 100px;
     border-right: 1px solid black;
+}
+
+@media screen and (max-width: 550px) {
+    .title-text {
+        font-size: 40px;
+    }
 }
