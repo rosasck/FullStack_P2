@@ -16,7 +16,7 @@ if($connection->connect_error){
 //Users- userID
 //petUserRel- petID, userID
 
-$sqlquery= "INSERT INTO PET(petID) VALUES ('120')";
+$sqlquery= "INSERT INTO public.Pet(petID) VALUES ('50')";
 if(pg_query($connection, $sqlquery)){
     echo "new record created successfully";
 }
@@ -24,7 +24,7 @@ else{
     echo "Errror".pg_result_error($connection);
 }
 
-$sqlquery= "INSERT INTO Users(userID) VALUES ('44')";
+$sqlquery= "INSERT INTO public.Users(userID) VALUES ('44')";
 if(pg_query($connection, $sqlquery)){
     echo "new record created successfully";
 }
@@ -32,7 +32,7 @@ else{
     echo "Errror".pg_result_error($connection);
 }
 
-$sqlquery= "INSERT INTO petUserRel(userID, petID) VALUES ('120', '44')";
+$sqlquery= "INSERT INTO public.petUserRel(userID, petID) VALUES ('120', '44')";
 if(pg_query($connection, $sqlquery)){
     echo "new record created successfully";
 }
