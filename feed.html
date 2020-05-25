@@ -17,13 +17,13 @@
       <div class = "title-small">Pet-Tential</div>
       <!-- look into bootstrap navbars-->
       <div class = "nav-buttons">
-        <input type = "button" onclick="window.location.href='savedpets/public/index.html'" value = "Saved Pets">
-        <button><a href="/account.html">Settings</a></button>
-        <button><a href="#" onclick="signOut();">Sign Out</a></button>
+        <a class = "btn" href = "/savedpets/public/index.html"><i class="far fa-heart fa-lg"></i></a>
+        <a class = "btn" href = "account.html"><i class="fas fa-user-cog fa-lg"></i></a>
+        <a class = "btn" href="#" onclick="signOut();"><i class="fas fa-sign-out-alt fa-lg"></i></a>
       </div>
     </header>
     <section class = "feed">
-      <!-- look into using boot strap grid to align buttons for mobile -->
+      <!-- hide heart buttons when on mobile and show heart buttons inside card instead -->
       <a class = "btn" href ="#"><i class="fas fa-heart-broken fa-5x"></i></a> 
       <div class = "card">
         <img src = "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg" class = "pet-pic"/>
