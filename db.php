@@ -16,30 +16,33 @@ if($connection->connect_error){
 //Users- userID
 //petUserRel- petID, userID
 
-$sqlquery= "INSERT INTO public.Pet(petID) VALUES ('50')";
-if(pg_query($connection, $sqlquery)){
-    echo "new record created successfully";
+function petDBInsert(){
+    $sqlquery= "INSERT INTO public.Pet(petID) VALUES ('50')";
+    if(pg_query($connection, $sqlquery)){
+        echo "new record created successfully";
+    }
+    else{
+        echo "Errror".pg_result_error($connection);
+    }
 }
-else{
-    echo "Errror".pg_result_error($connection);
+function userDBInsert(){
+    $sqlquery= "INSERT INTO public.Users(userID) VALUES ('44')";
+    if(pg_query($connection, $sqlquery)){
+        echo "new record created successfully";
+    }
+    else{
+        echo "Errror".pg_result_error($connection);
+    }
 }
-
-$sqlquery= "INSERT INTO public.Users(userID) VALUES ('44')";
-if(pg_query($connection, $sqlquery)){
-    echo "new record created successfully";
+function petUserRelInsert(){
+    $sqlquery= "INSERT INTO public.petUserRel(userID, petID) VALUES ('120', '44')";
+    if(pg_query($connection, $sqlquery)){
+        echo "new record created successfully";
+    }
+    else{
+        echo "Errror".pg_result_error($connection);
+    }
 }
-else{
-    echo "Errror".pg_result_error($connection);
-}
-
-$sqlquery= "INSERT INTO public.petUserRel(userID, petID) VALUES ('120', '44')";
-if(pg_query($connection, $sqlquery)){
-    echo "new record created successfully";
-}
-else{
-    echo "Errror".pg_result_error($connection);
-}
-
 //$query= "SELECT * FROM spy.agent;";
 
 /*
