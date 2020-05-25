@@ -67,11 +67,22 @@ header {
     box-shadow: 0 0 6px rgba(35, 173, 278, 1);
 } 
 
+.welc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .welcome {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
+    padding: 20px;
+    border: solid 2px #997B66;
+    border-radius: 8px;
+    max-width: 500px;
+    text-align: justify;
 }
 
 .blurb {
@@ -82,7 +93,6 @@ header {
 }
 
 p {
-    text-indent: 20px;
     color: rgb(82, 65, 54);
 }
 
