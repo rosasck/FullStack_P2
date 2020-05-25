@@ -1,0 +1,14 @@
+.settings {
+    padding: 30px;
+}
+
+.user-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin: 30px;
+    border: solid 2px #997B66;
+    border-radius: 8px;
+    padding: 20px;
+}
+
