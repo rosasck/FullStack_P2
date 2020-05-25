@@ -17,16 +17,13 @@
     background-color: #F4978E;
 }
 
-.fa-heart-broken {
+.fa-heart-broken, .fa-heart, .fa-user-cog, .fa-sign-out-alt, .fa-home {
     color: #F08080;
 }
 
-.fa-heart-broken:hover, .fa-heart:hover {
+.fa-heart-broken:hover, .fa-heart:hover, .fa-user-cog:hover, 
+.fa-sign-out-alt:hover, .fa-home:hover{
     color: #997B66;
-}
-
-.fa-heart {
-    color: #F08080;
 }
 
 .pet-pic {
