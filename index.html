@@ -3,20 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta name="google-signin-client_id" content="363237205639-vin8sk05pes5j1vofs5e6ghidqn5ub81.apps.googleusercontent.com"/>
+   
+    <meta name="google-signin-client_id" content="363237205639-3a9e7t3hr2tpl226ui49i2e8p598v5ju.apps.googleusercontent.com"/>
+   <!-- 363237205639-3a9e7t3hr2tpl226ui49i2e8p598v5ju.apps.googleusercontent.com THIS IS FOR WEB APP-->
+   <!-- 363237205639-vin8sk05pes5j1vofs5e6ghidqn5ub81.apps.googleusercontent.com this is for desktop client-->
+   
     <link rel="stylesheet" href="style.css" />
+     <script src="index.js"></script>
+     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title>Pet-Tential</title>
   </head>
   <body>
     <header>
-        <h1>Pet-Tential</h1>
+      <!--
+        <h1><span class = "fontawesome-star star"></span> <span>Pet-Tential</span>
+        <span class = "fontawesome-star star"></span>
+      </h1>
+      -->
+      <div class = "title-text">Pet-Tential</div>
     </header>
     <section class = "welcome">
         <div class = "blurb">
-            <p>Welcome the user, what is this website, warn about guest browsing...</p>
+            <p>Welcome the user, what is this website, warn about guest browsing... Lorem ipsum dolor sit amet, id denique nostrum nam, sit ei ipsum laoreet propriae, in est dicta nulla. Ei quo nemore voluptua, causae feugait vis cu. Ad eos denique fabellas.</p>
+            <p>Lorem ipsum dolor sit amet, id denique nostrum nam, sit ei ipsum laoreet propriae, in est dicta nulla. Ei quo nemore voluptua, causae feugait vis cu. Ad eos denique fabellas.</p>
         </div>
         <div class = "btn-container">
-            <button>Sign-in with Google</button>
-            <button>Browse as a guest</button>
+            <div class="g-signin2" data-onsuccess="./feed.html" onclick="window.location.href='./feed.html'"></div>
+            <input class = "guest-btn" type="button" onclick="window.location.href='./feed.html'" value = "Browse as a guest">
         </div>
     </section>
   </body>
