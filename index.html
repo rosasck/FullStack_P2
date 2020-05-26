@@ -23,15 +23,20 @@
       -->
       <div class = "title-text">Pet-Tential</div>
     </header>
-    <section class = "welcome">
+    <section class = "welc-container">
+      <div class = "welcome">
         <div class = "blurb">
-            <p>Welcome the user, what is this website, warn about guest browsing... Lorem ipsum dolor sit amet, id denique nostrum nam, sit ei ipsum laoreet propriae, in est dicta nulla. Ei quo nemore voluptua, causae feugait vis cu. Ad eos denique fabellas.</p>
-            <p>Lorem ipsum dolor sit amet, id denique nostrum nam, sit ei ipsum laoreet propriae, in est dicta nulla. Ei quo nemore voluptua, causae feugait vis cu. Ad eos denique fabellas.</p>
+            <p>Welcome to Pet-Tential! This app was created in an effort to encourage animal adoption. We've streamlined the online search process for you. Look through available shelter animals near you; customize their distance from you, animal type, fur color, and so much more. We hope you find your forever friend!<br><br>
+              If you sign in with google, you are able to save your liked pets. Please note that if you choose to browse as a guest 
+              this feature has been turned off, but feel free to scroll through the pets!
+            </p>
         </div>
         <div class = "btn-container">
-            <div class="g-signin2" data-onsuccess="./feed.html" onclick="window.location.href='./feed.html'"></div>
+            <div class="g-signin2" data-onsuccess="onSignin($event)" onclick="window.location.href='./feed.html'"></div>
+          
             <input class = "guest-btn" type="button" onclick="window.location.href='./feed.html'" value = "Browse as a guest">
         </div>
+      </div>
     </section>
   </body>
 </html>

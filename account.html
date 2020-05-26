@@ -3,25 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="feed.css" />
+    <link rel="stylesheet" href="form.css" />
+    <script src="https://kit.fontawesome.com/355d6f4d57.js" crossorigin="anonymous"></script>
     <title>Account Settings</title>
   </head>
   <body>
     <header>
       <div class = "title-small" >Pet-Tential</div>
       <div class = "nav-buttons">
-        <input type = "button" onclick="window.location.href='savedpets/public/index.html'" value = "Saved Pets">
-        <button><a href="/feed.html">Home</a></button>
+        <a class = "btn" href = "/savedpets/public/index.html"><i class="far fa-heart fa-lg"></i></a>
+        <a class = "btn" href="/feed.html"><i class="fas fa-home fa-lg"></i></a>
       </div>
     </header>
     <section class = "settings">
-      <h1>Username</h1>
-      <h3>Filters</h3>
-      <ul>
-        <li>location</li>
-        <li>appearance</li>
-        <li>type of animal</li>
-      </ul>
+      <h1>Hello, Username</h1>
+
+      <form class = "user-settings" id ="user-settings" action="#">
+        <h2 style="text-align: center;">Filters</h2>
+
+        <div class = "location-container">
+          <h4>Location</h4>
+          <div class="form-group">           
+              <label for="zip-code">Zip Code:</label>
+              <input type="text" class="form-control" id="zip-code">
+          </div>
+
+          <div class = "form-group">
+            <label for="distance">Distance from me</label>
+            <select id="distance" name>
+              <option value>25 miles</option>
+              <option value>26 - 50 miles</option>
+              <option value>51 - 100 miles</option>
+              <option value>100+ miles</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class = "animal-container">
+          <h4>Animals</h4>
+          <div class = "form-group">
+            <label for="type">Type of animal</label>
+            <select name="type" id="type">
+              <option value="all">All animal types</option>
+              <option value="dogs">Dogs and Puppies</option>
+              <option value="cats">Cats and Kittens</option>
+              <option value="small">Small Animals</option>
+              <option value="horsefarm">Horses and Farm Animals</option>
+              </select>
+          </div>
+
+          <!--Breed-->
+          <div class = "form-group">
+            <label for="breed">Breed</label>
+            <select id="breed" name>
+              <option value>Any Breed</option>
+            </select>
+          </div>
+
+          <!--Gender-->
+          <div class = "form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" name>
+              <option value>Any Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+
+          <!--Size (accept multiple)-->
+          <div class = "form-group">
+            <label for="size">Size</label>
+            <select id="size" name>
+              <option value>Any Size</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="xlarge">X-Large</option>
+            </select>
+          </div>
+
+          <!--Age (accept multiple)-->
+          <div class = "form-group">
+            <label for="age">Age</label>
+            <select id="age" name>
+              <option value>Any Age</option>
+              <option value="baby">Baby</option>
+              <option value="young">Young</option>
+              <option value="adult">Adult</option>
+              <option value="senior">Senior</option>
+            </select>
+          </div>
+          <!--Color allow multiple-->
+          <!--Coat allow multiple-->
+          <!--Good w/ children, cats, dogs allow multiple "environment" -->
+          <!--Update/Save-->
+        </div>
+        <button type="submit" class="btn btn-primary btn-md">Update Filters</button>
+
+    </form>
     </section>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 </html>
