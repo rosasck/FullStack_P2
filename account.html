@@ -28,16 +28,16 @@
           <h4>Location</h4>
           <div class="form-group">           
               <label for="zip-code">Zip Code:</label>
-              <input type="text" class="form-control" id="zip-code">
+              <input type="text" class="form-control" id="zipcode">
           </div>
 
           <div class = "form-group">
             <label for="distance">Distance from me</label>
-            <select id="distance" name>
-              <option value>25 miles</option>
-              <option value>26 - 50 miles</option>
-              <option value>51 - 100 miles</option>
-              <option value>100+ miles</option>
+            <select id="distance">
+              <option value="25">25 miles</option>
+              <option value="50">26 - 50 miles</option>
+              <option value="100">51 - 100 miles</option>
+              <option value="500">100+ miles</option>
             </select>
           </div>
         </div>
@@ -49,7 +49,7 @@
             <select name="type" id="type">
               <option value="all">All animal types</option>
               <option value="dogs">Dogs and Puppies</option>
-              <option value="cats">Cats and Kittens</option>
+              <option value="Cat">Cats and Kittens</option>
               <option value="small">Small Animals</option>
               <option value="horsefarm">Horses and Farm Animals</option>
               </select>
@@ -96,17 +96,33 @@
               <option value="senior">Senior</option>
             </select>
           </div>
+
           <!--Color allow multiple-->
+
           <!--Coat allow multiple-->
+
           <!--Good w/ children, cats, dogs allow multiple "environment" -->
+          <div class = "form-group">
+            <label class="checkbox-inline">
+              <input type="checkbox" id="good_with_cats"> Good with cats 
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="good_with_dogs"> Good with dogs 
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" id="good_with_children"> Good with children 
+            </label>
+          </div>
+
           <!--Update/Save-->
         </div>
-        <button type="submit" class="btn btn-primary btn-md">Update Filters</button>
+        <button type="submit" class="btn btn-primary btn-md" onclick = "test()">Update Filters</button>
 
-    </form>
+      </form>
     </section>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="account.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 </html>
