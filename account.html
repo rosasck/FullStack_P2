@@ -24,89 +24,118 @@
       <form class = "user-settings" id ="user-settings" action="#">
         <h2 style="text-align: center;">Filters</h2>
 
+        <h4>Location</h4>
         <div class = "location-container">
-          <h4>Location</h4>
-          <div class="form-group">           
+          <div class="form-group row">           
+            <div class="col-sm-3 mb-3">
               <label for="zip-code">Zip Code:</label>
-              <input type="text" class="form-control" id="zip-code">
-          </div>
-
-          <div class = "form-group">
-            <label for="distance">Distance from me</label>
-            <select id="distance" name>
-              <option value>25 miles</option>
-              <option value>26 - 50 miles</option>
-              <option value>51 - 100 miles</option>
-              <option value>100+ miles</option>
-            </select>
+              <input type="text" class="form-control" id="zipcode">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="distance">Distance from me</label>
+              <select id="distance">
+                <option value="25">25 miles</option>
+                <option value="50">26 - 50 miles</option>
+                <option value="100">51 - 100 miles</option>
+                <option value="500">100+ miles</option>
+              </select>
+            </div>
           </div>
         </div>
-  
+
+        <h4>Animals</h4>
         <div class = "animal-container">
-          <h4>Animals</h4>
           <div class = "form-group">
-            <label for="type">Type of animal</label>
+            <div class="col-md-6 mb-3">
+            <label for="type">Type of animal: </label>
             <select name="type" id="type">
               <option value="all">All animal types</option>
               <option value="dogs">Dogs and Puppies</option>
-              <option value="cats">Cats and Kittens</option>
+              <option value="Cat">Cats and Kittens</option>
               <option value="small">Small Animals</option>
               <option value="horsefarm">Horses and Farm Animals</option>
               </select>
+            </div>
           </div>
 
           <!--Breed-->
           <div class = "form-group">
-            <label for="breed">Breed</label>
+            <div class="col-md-6 mb-3">
+            <label for="breed">Breed: </label>
             <select id="breed" name>
               <option value>Any Breed</option>
             </select>
+            </div>
           </div>
 
           <!--Gender-->
           <div class = "form-group">
-            <label for="gender">Gender</label>
-            <select id="gender" name>
-              <option value>Any Gender</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-            </select>
+            <div class="col-md-6 mb-3">
+              <label for="gender">Gender: </label>
+              <select id="gender" name>
+                <option value>Any Gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+              </select>
+            </div>
           </div>
 
           <!--Size (accept multiple)-->
           <div class = "form-group">
-            <label for="size">Size</label>
-            <select id="size" name>
-              <option value>Any Size</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="xlarge">X-Large</option>
-            </select>
+            <div class="col-md-6 mb-3">
+              <label for="size">Size: </label>
+              <select id="size" name>
+                <option value>Any Size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xlarge">X-Large</option>
+              </select>
+            </div>
           </div>
 
           <!--Age (accept multiple)-->
           <div class = "form-group">
-            <label for="age">Age</label>
-            <select id="age" name>
-              <option value>Any Age</option>
-              <option value="baby">Baby</option>
-              <option value="young">Young</option>
-              <option value="adult">Adult</option>
-              <option value="senior">Senior</option>
-            </select>
+            <div class="col-md-6 mb-3">
+              <label for="age">Age: </label>
+              <select id="age" name>
+                <option value>Any Age</option>
+                <option value="baby">Baby</option>
+                <option value="young">Young</option>
+                <option value="adult">Adult</option>
+                <option value="senior">Senior</option>
+              </select>
+            </div>
           </div>
+
           <!--Color allow multiple-->
+
           <!--Coat allow multiple-->
+
           <!--Good w/ children, cats, dogs allow multiple "environment" -->
+          <div class = "form-group">
+            <div class="col-lg-6 mb-3">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="good_with_cats"> Good with cats 
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="good_with_dogs"> Good with dogs 
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="good_with_children"> Good with children 
+              </label>
+            </div>
+          </div>
+
           <!--Update/Save-->
         </div>
-        <button type="submit" class="btn btn-primary btn-md">Update Filters</button>
+        <button type="submit" class="btn btn-outline-danger btn-sm" onclick = "test()">Update Filters</button>
 
-    </form>
+      </form>
     </section>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="account.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 </html>
