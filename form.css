@@ -1,5 +1,8 @@
 .settings {
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .user-settings {
@@ -10,5 +13,28 @@
     border: solid 2px #997B66;
     border-radius: 8px;
     padding: 20px;
+    width: 500px;
+}
+
+.btn.btn-outline-danger.btn-sm {
+    width: 120px;
+    align-self: center;
+}
+
+h4 {
+    border: solid 1px #997B66;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #997B66;
+    color: #FFDAB9;
+    margin-bottom: 20px;
+}
+
+input[type=text] {
+    background-color: white;
+}
+
+.form-group.row {
+    padding-left: 15px;
 }
 
