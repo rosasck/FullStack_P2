@@ -1,4 +1,5 @@
 <?php 
+/*
 $username= "vdenscfzdhznxf";
 $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
 $databasename="dbpdnfp0icj490";
@@ -15,33 +16,112 @@ if($connection->connect_error){
 //Pet- petID
 //Users- userID
 //petUserRel- petID, userID
+*/
+function petDBInsert($petid){
+    $username= "vdenscfzdhznxf";
+    $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
+    $databasename="dbpdnfp0icj490";
+    $hostname= "ec2-52-202-22-140.compute-1.amazonaws.com";
+    $port="5432";
 
-function petDBInsert(){
-    $sqlquery= "INSERT INTO public.Pet(petID) VALUES ('50')";
-    if(pg_query($connection, $sqlquery)){
+    $connect= pg_connect("host=$hostname port=$port dbname=$databasename user=$username password=$password") 
+    or die("could not connect");
+
+      $sqlquery= "INSERT INTO public.'Pet'('petID') VALUES ($petid)";
+      if(pg_query($connect, $sqlquery)){
         echo "new record created successfully";
-    }
-    else{
-        echo "Errror".pg_result_error($connection);
-    }
+     }
+      else{
+        echo "Errror".pg_result_error($connect);
+      }
+
+    pg_close($connect);
 }
-function userDBInsert(){
-    $sqlquery= "INSERT INTO public.Users(userID) VALUES ('44')";
+
+
+function userDBInsert($userid){
+    $username= "vdenscfzdhznxf";
+    $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
+    $databasename="dbpdnfp0icj490";
+    $hostname= "ec2-52-202-22-140.compute-1.amazonaws.com";
+    $port="5432";
+
+    $connection = pg_connect("host=$hostname port=$port dbname=$databasename user=$username password=$password") 
+    or die("could not connect");
+
+
+
+    $sqlquery= "INSERT INTO public.'Users'('userID') VALUES ($userid)";
     if(pg_query($connection, $sqlquery)){
         echo "new record created successfully";
     }
     else{
         echo "Errror".pg_result_error($connection);
     }
+
+pg_close($connection);
 }
-function petUserRelInsert(){
-    $sqlquery= "INSERT INTO public.petUserRel(userID, petID) VALUES ('120', '44')";
+
+
+function petUserRelInsert($userid, $petid){
+    $username= "vdenscfzdhznxf";
+    $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
+    $databasename="dbpdnfp0icj490";
+    $hostname= "ec2-52-202-22-140.compute-1.amazonaws.com";
+    $port="5432";
+
+    $connection = pg_connect("host=$hostname port=$port dbname=$databasename user=$username password=$password") 
+    or die("could not connect");
+
+    $sqlquery= "INSERT INTO public.'petUserRel'('userID', 'petID') VALUES ($userid, $petid)";
     if(pg_query($connection, $sqlquery)){
         echo "new record created successfully";
     }
     else{
         echo "Errror".pg_result_error($connection);
     }
+
+     pg_close($connection);
+}
+
+function petDBQuery(){//once i get the userID working.. pass in $userid
+    $username= "vdenscfzdhznxf";
+    $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
+    $databasename="dbpdnfp0icj490";
+    $hostname= "ec2-52-202-22-140.compute-1.amazonaws.com";
+    $port="5432";
+
+    $connection = pg_connect("host=$hostname port=$port dbname=$databasename user=$username password=$password") 
+    or die("could not connect");
+
+
+
+    //$query= "SELECT petID FROM public.'petUserRel' WHERE userID= $userid ";
+    //query to only get pets for that specific user!
+    $query= "SELECT * FROM public.'Pet'";
+    $result=pg_query($connection,$query)
+            or die("Query error: " .pg_last_error());
+           
+     $numrows = pg_num_rows($result);
+     $numfields= pg_num_fields($result);// this is 1!
+
+     while($row = pg_fetch_row($result))
+     {
+             $i=0;
+     
+             while($i < $numfields)
+             {
+                     $current_value=$row[$i]; 
+                     //the current value is the PETID!
+                    echo "".$current_value;
+                     $i=$i+1;
+     
+             }
+             pg_free_result($result);
+     
+     };
+    
+     pg_close($connection);
 }
 //$query= "SELECT * FROM spy.agent;";
 
@@ -83,8 +163,4 @@ while($row = pg_fetch_row($result))
 
     };
     */
-pg_close($connection);
-
-
 ?>
- 
