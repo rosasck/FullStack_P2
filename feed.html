@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="feed/src/feed.css"/>
     <script src="https://kit.fontawesome.com/355d6f4d57.js" crossorigin="anonymous"></script>
     <script src="feed.js"></script>
-    <script src="./savedpets/src/index.js"></script>
+    <!--<script src="./savedpets/src/index.js"></script>-->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
     <title>Your Feed</title>
   </head>
   <body>
@@ -17,22 +20,15 @@
       <div class = "title-small">Pet-Tential</div>
       <!-- look into bootstrap navbars-->
       <div class = "nav-buttons">
-        <a class = "btn" href = "/savedpets/public/index.html"><i class="far fa-heart fa-lg"></i></a>
+        <a class = "btn" href = "saved_pets_index.html"><i class="far fa-heart fa-lg"></i></a>
         <a class = "btn" href = "account.html"><i class="fas fa-user-cog fa-lg"></i></a>
-        <a class = "btn" href="#" onclick="signOut();"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+        <a class = "btn" href="goodBye.html" onclick="signOut();"><i class="fas fa-sign-out-alt fa-lg"></i></a>
       </div>
     </header>
-    <section class = "feed">
+    <section class = "feed" id = "root">
       <!-- hide heart buttons when on mobile and show heart buttons inside card instead -->
-      <a class = "btn" href ="#"><i class="fas fa-heart-broken fa-5x"></i></a> 
-      <div class = "card">
-        <img src = "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg" class = "pet-pic"/>
-        <div class = "pet-info">
-          <h1 style="background-color:#FBC4AB;">Pet Name</h1>
-          <p style="background-color:#FBC4AB;">description -- Lorem ipsum dolor sit amet, id denique nostrum nam, sit ei ipsum laoreet propriae, in est dicta nulla. Ei quo nemore voluptua, causae feugait vis cu. Ad eos denique fabellas.</p>
-        </div>
-      </div>
-      <a class = "btn" href ="#"><i class="fas fa-heart fa-5x"></i></a>
     </section>
+    <script src="authorizationKey.js"></script>
+    <script src="reactFeed.js" type = "text/babel"></script>
   </body>
 </html>
