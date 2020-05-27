@@ -48,7 +48,7 @@ class PetInfo extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
-       var newImage, newName, newDesc, newId;
+       let newImage, newName, newDesc, newId;
 
        /*** TO DO: GET FILTERS ***/
 
@@ -79,6 +79,7 @@ class PetInfo extends React.Component{
                    let pet = data.animals[this.index];
                    newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
                    newName = pet.name ? pet.name : "Unknown";
+                   //The description needs to be modified to replace 
                    newDesc = pet.description ? pet.description : "";
                    newId = pet.id;
                    ++this.index;
@@ -107,6 +108,7 @@ class PetInfo extends React.Component{
            let pet = this.petArray[this.index];
            newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            newName = pet.name ? pet.name : "Unknown";
+           //The description needs to be modified to replace 
            newDesc = pet.description ? pet.description : "";
            newId = pet.id 
            ++this.index;
