@@ -102,7 +102,7 @@ function petDBQuery(){//once i get the userID working.. pass in $userid
     $result=pg_query($connection,$query)
             or die("Query error: " .pg_last_error());
            
-     $numrows = pg_num_rows($result);
+     $numrows = pg_num_rows($result);//how many cards we need to autogenerate!
      $numfields= pg_num_fields($result);// this is 1!
 
      while($row = pg_fetch_row($result))
@@ -113,6 +113,9 @@ function petDBQuery(){//once i get the userID working.. pass in $userid
              {
                      $current_value=$row[$i]; 
                      //the current value is the PETID!
+                     //this value is what should be linked. 
+                     //Also i should have an API call to get me the picture.. ASkK TAYLOR IF I CAN STEAK
+                     //HER CODE FOR IT 
                     echo "".$current_value;
                      $i=$i+1;
      
