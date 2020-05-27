@@ -1,3 +1,9 @@
+/*
+$(document).ready(function() {
+    $('.selectpicker').selectpicker();
+ });
+*/
+
 function test() {
     var zipcode = document.getElementById("zipcode").value;
     var distance = document.getElementById("distance").value;
@@ -6,9 +12,10 @@ function test() {
     var gender = document.getElementById("gender").value;
     var size = document.getElementById("size").value;
     var age = document.getElementById("age").value;
-    var good_with_cats = document.getElementById("good_with_cats").value;
-    var good_with_dogs = document.getElementById("good_with_dogs").value;
-    var good_with_children = document.getElementById("good_with_children").value;
+    var good_with_cats = document.getElementById("good_with_cats").checked;
+    var good_with_dogs = document.getElementById("good_with_dogs").checked;
+    var good_with_children = document.getElementById("good_with_children").checked;
+
 
     //console.log("name: " + name);
     //console.log("email: " + email);
