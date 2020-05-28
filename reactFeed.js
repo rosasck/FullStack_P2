@@ -38,15 +38,26 @@ class PetInfo extends React.Component{
         super(props);
         this.state = {
             image: "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg",
-            name: "No Name",
-            description: "No Description",
+            name: "Loading Name...",
+            description: "Loading Description...",
             petId: 0,
         }
         this.petArray = null;
         this.index = 0;
         this.page = 1;
         this.handleClick = this.handleClick.bind(this);
+        if(!token){
+            getToken()
+            .then(this.handleClick())
+            .catch(err=>{
+                console.log(`ERROR MESSAGE: ${err}`);
+            });
+        }
+        else{
+            this.handleClick();
+        }
     }
+    //Loads a pet's info into the feed
     handleClick() {
        let newImage, newName, newDesc, newId;
 
@@ -61,6 +72,7 @@ class PetInfo extends React.Component{
                ++this.page;
                animalUrl = baseAnimalUrl + `&page=${this.page}`;
            }
+           //Makes a GET request for that page.
            fetch(animalUrl, {
                headers:{
                    'Authorization': `Bearer ${token}`,
@@ -92,11 +104,16 @@ class PetInfo extends React.Component{
                 }));
                })
            .catch(error=>{
-               //This is a bad way of checking if a token is expired, but I cant figure out any other information 
-               //about the errors sent other than the message
+               //Handles if an authorization token has expired.
                if(error.message.includes("Failed to fetch"))
                 {
-                    getToken();
+                    //This calls handleClick multiple times before the getToken finishes for some reason...
+                    //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
+                    getToken()
+                    .then(this.handleClick())
+                    .catch(err=>{
+                        console.log(`ERROR MESSAGE: ${err}`);
+                    });
                 }
                 else{
                     console.log('ERROR MESSAGE: ', error.message);
