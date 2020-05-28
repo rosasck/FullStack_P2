@@ -21,6 +21,16 @@ const info= {
   margin: 15,
   backgroundColor: '#FBC4AB',
 }
+const petInfo = {
+  width: 380,
+  borderRadius: 8,
+  padding: 15,
+  margin: 15,
+  backgroundColor: '#FBC4AB',
+}
+const petData = {
+  backgroundColor:'#FBC4AB',
+}
 
 class SavedPets extends React.Component{
   constructor(props)
@@ -39,9 +49,10 @@ class SavedPets extends React.Component{
         <div className = "savedPetsPlace">
             <div style = {card} className = "card">
                 <img style = {picture} src = {this.state.image} alt = "A pet"/>
-            </div>
-            <div style = {card} className = "card">
-                <img style = {picture} src = {this.state.image} alt = "A pet"/>
+                <div style = {petInfo} className = "pet-info">
+                        <h1 style = {petData}>{this.state.name}</h1>
+                        <p style = {petData}>{this.state.description}</p>
+                </div>
             </div>
         </div>
     );
