@@ -1,5 +1,6 @@
 //Here is a valid pet id to test with 47929706.
 let id = 0;
+//let id = 47929706;
 let petIDUrl = `https://api.petfinder.com/v2/animals/${id}`;
 
 //This function should be called before the pet page is rendered!
@@ -59,10 +60,10 @@ fetch(petIDUrl, {
     else if(error.code){
          console.log(`ERROR STATUS: ${error.code} ERROR MESSAGE: ${error.message}`);
     }
-    //Supposed to check if a token has expired, but is not the correct conditonal 
+    //If a token is expired, gets new authorization token & re-runs the function.
     else if(error.message.includes("Failed to fetch"))
     {
-         //getToken();
+        getToken().then(loadPet).catch(err=>{console.log(err);});
     }
     else{
          console.log('ERROR MESSAGE: ', error.message);
