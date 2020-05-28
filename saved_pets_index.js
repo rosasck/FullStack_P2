@@ -46,6 +46,8 @@ class SavedPets extends React.Component{
 
   render(){
     return(
+      //this needs to have a for loop to load cards for the number of rows 
+      //based on the php num rows 
         <div className = "savedPetsPlace">
             <div style = {card} className = "card">
                 <img style = {picture} src = {this.state.image} alt = "A pet"/>

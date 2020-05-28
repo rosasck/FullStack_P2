@@ -84,7 +84,7 @@ function petUserRelInsert($userid, $petid){
      pg_close($connection);
 }
 
-function petDBQuery(){//once i get the userID working.. pass in $userid
+function getRowsInSavedPets(){
     $username= "vdenscfzdhznxf";
     $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
     $databasename="dbpdnfp0icj490";
@@ -94,7 +94,27 @@ function petDBQuery(){//once i get the userID working.. pass in $userid
     $connection = pg_connect("host=$hostname port=$port dbname=$databasename user=$username password=$password") 
     or die("could not connect");
 
+    //$query= "SELECT petID FROM public.'petUserRel' WHERE userID= $userid ";
+    //query to only get pets for that specific user!
+    $query= "SELECT * FROM public.'Pet'";
+    $result=pg_query($connection,$query)
+            or die("Query error: " .pg_last_error());
+           
+     $numrows = pg_num_rows($result);//how many cards we need to autogenerate!
 
+     return $numrows;
+ 
+}
+
+function petDBQuery(){//once i get the userID working.. pass in $userid
+    $username= "vdenscfzdhznxf";
+    $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
+    $databasename="dbpdnfp0icj490";
+    $hostname= "ec2-52-202-22-140.compute-1.amazonaws.com";
+    $port="5432";
+
+    $connection = pg_connect("host=$hostname port=$port dbname=$databasename user=$username password=$password") 
+    or die("could not connect");
 
     //$query= "SELECT petID FROM public.'petUserRel' WHERE userID= $userid ";
     //query to only get pets for that specific user!
