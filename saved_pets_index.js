@@ -1,3 +1,7 @@
+
+const baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=random";
+let animalUrl = baseAnimalUrl;
+
 const card = {
   display: 'flex',
   flexDirection: 'column',
@@ -43,6 +47,54 @@ class SavedPets extends React.Component{
           petId: 0,
       }
   } 
+
+loadPets(){
+      animalUrl = baseAnimalUrl + `&page=${this.page}`;
+  fetch(animalUrl, {
+      headers:{
+          'Authorization': `Bearer ${token}`,
+  }})
+
+  .then(response=>{return response.json();})
+  .then(data=>
+      {
+          //Checks if there are any more animals to display
+          //If not, there will also be no more pages to look through.
+          /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
+          if(data.animals.length === 0)
+           throw new Error('No Animals');
+
+          this.petArray = data.animals;
+          this.index = 0;
+          let pet = data.animals[this.index];
+          newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
+          newName = pet.name ? pet.name : "Unknown";
+          //The description needs to be modified to replace 
+          newDesc = pet.description ? pet.description : "";
+          newId = pet.id;
+          ++this.index;
+
+          this.setState(state => ({
+           image: newImage,
+           name: newName,
+           description: newDesc,
+           petId: newId,
+       }));
+      })
+  .catch(error=>{
+      //This is a bad way of checking if a token is expired, but I cant figure out any other information 
+      //about the errors sent other than the message
+      if(error.message.includes("Failed to fetch"))
+       {
+           getToken();
+       }
+       else{
+           console.log('ERROR MESSAGE: ', error.message);
+       }
+   });
+
+}
+
 
   render(){
     return(
