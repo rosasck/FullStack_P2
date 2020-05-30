@@ -150,7 +150,7 @@ class PetInfo extends React.Component{
                         <p style = {petData}>{this.state.description}</p>
                     </div>
                 </div>
-                <a className = "btn" href ="#" onClick = {this.handleClick}><i style = {heartColor} className="fas fa-heart fa-5x"></i></a>
+                <a className = "btn" href ="#" onClick = {this.handleClick}><i className="fas fa-heart fa-5x"></i></a>
             </div>
         );
     }
