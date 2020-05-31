@@ -48,6 +48,7 @@ class SavedPets extends React.Component{
       }
   } 
 
+/*
 loadPets(){
       animalUrl = baseAnimalUrl + `&page=${this.page}`;
   fetch(animalUrl, {
@@ -60,7 +61,7 @@ loadPets(){
       {
           //Checks if there are any more animals to display
           //If not, there will also be no more pages to look through.
-          /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
+          //TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages 
           if(data.animals.length === 0)
            throw new Error('No Animals');
 
@@ -95,6 +96,7 @@ loadPets(){
 
 }
 
+*/
 
   render(){
     return(
@@ -106,6 +108,8 @@ loadPets(){
                 <div style = {petInfo} className = "pet-info">
                         <h1 style = {petData}>{this.state.name}</h1>
                         <p style = {petData}>{this.state.description}</p>
+
+                <a className = "btn" href ="#">More Info</a>
                 </div>
             </div>
         </div>
