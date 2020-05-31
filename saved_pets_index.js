@@ -1,7 +1,7 @@
 
 const baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=random";
 let animalUrl = baseAnimalUrl;
-
+//import {setPetID, loadPet  } from "./pet-page.js";
 const card = {
   display: 'flex',
   flexDirection: 'column',
@@ -48,7 +48,7 @@ class SavedPets extends React.Component{
       }
   } 
 
-/*
+
 loadPets(){
       animalUrl = baseAnimalUrl + `&page=${this.page}`;
   fetch(animalUrl, {
@@ -74,6 +74,11 @@ loadPets(){
           newDesc = pet.description ? pet.description : "";
           newId = pet.id;
           ++this.index;
+          
+          
+          //Calling the setPetID function to call the load pet page
+         // setPetID(newId);
+
 
           this.setState(state => ({
            image: newImage,
@@ -96,20 +101,20 @@ loadPets(){
 
 }
 
-*/
+
 
   render(){
     return(
       //this needs to have a for loop to load cards for the number of rows 
       //based on the php num rows 
+
+                //<a className = "btn" href ="#" onClick= {loadPet()}>More Info</a>
         <div className = "savedPetsPlace">
             <div style = {card} className = "card">
                 <img style = {picture} src = {this.state.image} alt = "A pet"/>
                 <div style = {petInfo} className = "pet-info">
                         <h1 style = {petData}>{this.state.name}</h1>
                         <p style = {petData}>{this.state.description}</p>
-
-                <a className = "btn" href ="#">More Info</a>
                 </div>
             </div>
         </div>

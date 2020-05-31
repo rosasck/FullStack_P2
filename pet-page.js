@@ -71,4 +71,4 @@ fetch(petIDUrl, {
  });
 }
 
-loadPet();
+//loadPet();
