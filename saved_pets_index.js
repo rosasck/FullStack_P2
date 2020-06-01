@@ -105,6 +105,32 @@ loadPets(){
 
   render(){
     return(
+/*
+
+     function petDBInsert($petid){
+      $('.button').click(function() {
+        $.ajax({
+          type: "POST",
+          url: "db.php",
+          data: { petid: "" }
+        }).done(function( msg ) {
+          alert( "Data Saved: " + msg );
+        });
+      });
+ 
+ 
+ 
+var idpet= 
+ var phpadd= <?php echo petDBInsert(idpet);?> //call the php add function
+  var phpmult= <?php echo mult(1,2);?> //call the php mult function
+  var phpdivide= <?php echo divide(1,2);?> //call the php divide function 
+ 
+ 
+ 
+ 
+ 
+ 
+      */
       //this needs to have a for loop to load cards for the number of rows 
       //based on the php num rows 
 
