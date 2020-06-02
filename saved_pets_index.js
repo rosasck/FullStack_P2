@@ -77,10 +77,6 @@ function loadPets(petId){
             error.code = data.status;
             throw error;
         }
-
-
-
-
            let pet = data.animal;
            let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            let name = pet.name ? pet.name : "Unknown";
@@ -110,7 +106,7 @@ function loadPets(petId){
         }
         else */
         if(error.code){
-             console.log(`ERROR STATUS: ${error.code} ERROR MESSAGE: ${error.message}`);
+             console.log(`AHHHH ERROR STATUS: ${error.code} ERROR MESSAGE: ${error.message}`);
         }
         //If a token is expired, gets new authorization token & re-runs the function.
         else if(error.message.includes("Failed to fetch"))
