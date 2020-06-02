@@ -6,18 +6,21 @@
     <title>Pet Description</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="feed.css" />
+    <script src="https://kit.fontawesome.com/355d6f4d57.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <!--<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>-->
+    <script src="feed.js"></script>
     <script src="pet-page.js"></script>
   </head>
   <body onload="loadPet()">
     <header>
-      <h2>Pet-Tential</h2>
+      <div class="title-small">Pet-Tential</div>
       <div class="nav-buttons">
-        <button>Saved Pets</button>
-        <button>Home</button>
-        <button>Settings</button>
+        <a class = "btn" href="feed.html"><i class="fas fa-home fa-lg"></i></a>
+        <a class="btn" href="saved_pets_index.html"><i class="far fa-heart fa-lg"></i></a>
+        <a class="btn" href="account.html"><i class="fas fa-user-cog fa-lg"></i></a>
+        <a class="btn" href="goodBye.html" onclick="signOut();"><i class="fas fa-sign-out-alt fa-lg"></i></a>
       </div>
     </header>
     <section class="more-pet-info" id="root">
@@ -31,6 +34,7 @@
     </section>
     <script src="authorizationKey.js"></script>
     <script src="dataFormatting.js"></script>
+    <script src="feed.js"></script>
     <!--<script src = "pet-page.js" type = "text/babel"></script>-->
   </body>
 </html>
