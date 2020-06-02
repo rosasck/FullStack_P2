@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pet Description</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="feed.css"/>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <!--<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>-->
+    <script src = "pet-page.js" ></script>
   </head>
-  <body>
+  <body onload="loadPet()">
     <header>
         <h2>Pet-Tential</h2>
         <div class = "nav-buttons">
@@ -27,6 +30,6 @@
         -->
       </section>
       <script src = "authorizationKey.js"></script>
-      <script src = "pet-page.js" type = "text/babel"></script>
+      <!--<script src = "pet-page.js" type = "text/babel"></script>-->
   </body>
 </html>
