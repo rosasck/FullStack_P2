@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="feed.css"/>
-    <script src="https://kit.fontawesome.com/355d6f4d57.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="feed.css" />
+    <script
+      src="https://kit.fontawesome.com/355d6f4d57.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="feed.js"></script>
     <!--<script src="./savedpets/src/index.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>-->
@@ -14,22 +17,27 @@
     <title>Your Feed</title>
   </head>
   <body>
-    <div>
-    </div>
+    <div></div>
     <header>
-      <div class = "title-small">Pet-Tential</div>
+      <div class="title-small">Pet-Tential</div>
       <!-- look into bootstrap navbars-->
-      <div class = "nav-buttons">
-
-        <a class = "btn" href = "saved_pets_index.html"><i class="far fa-heart fa-lg"></i></a>
-        <a class = "btn" href = "account.html"><i class="fas fa-user-cog fa-lg"></i></a>
-        <a class = "btn" href="goodBye.html" onclick="signOut();"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+      <div class="nav-buttons">
+        <a class="btn" href="saved_pets_index.html"
+          ><i class="far fa-heart fa-lg"></i
+        ></a>
+        <a class="btn" href="account.html"
+          ><i class="fas fa-user-cog fa-lg"></i
+        ></a>
+        <a class="btn" href="goodBye.html" onclick="signOut();"
+          ><i class="fas fa-sign-out-alt fa-lg"></i
+        ></a>
       </div>
     </header>
-    <section class = "feed" id = "root">
+    <section class="feed" id="root">
       <!-- hide heart buttons when on mobile and show heart buttons inside card instead -->
     </section>
     <script src="authorizationKey.js"></script>
+    <script src="dataFormatting.js"></script>
     <script src="./pet-page.js"></script>
     <script src="./reactFeed.js"></script>
   </body>

@@ -1,8 +1,16 @@
-//Here is a valid pet id to test with 47929706.
+//Here is a valid pet id to test with 48088956.
 
+//This fucntion should only be called by pet-page.html.
+//It uses the url of the pet-page to load a pet into the root of pet-page.html.
+//The url should contain a parameter with the id of the desired pet to be displayed.
+//ex. https://pet-tential.herokuapp.com/pet-page.html?id=47964823/
 function loadPet() {
+  // Gets the ID to display from the URL for pet-page.html
   var pageUrl = window.location.href.split("id=");
   var id = pageUrl[1];
+
+  //If no ID as parameter, dispalys error message on screen.
+  //Otherwise fetches & displays pet info
   if (!id) {
     var element = React.createElement(
       "div",
@@ -42,9 +50,9 @@ function loadPet() {
       // Renders pet information. This should be updated later to have more info.
       var pet = data.animal;
       var image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
-      var name = pet.name ? pet.name : "Unknown";
+      var name = pet.name ? formatString(pet.name) : "Unknown";
       //The description needs to be modified to replace
-      var desc = pet.description ? pet.description : "";
+      var desc = pet.description ? formatString(pet.description) : "";
       var element = React.createElement(
         "div",
         null,

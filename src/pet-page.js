@@ -1,4 +1,4 @@
-//Here is a valid pet id to test with 47929706.
+//Here is a valid pet id to test with 48088956.
 
 //This fucntion should only be called by pet-page.html.
 //It uses the url of the pet-page to load a pet into the root of pet-page.html.
@@ -48,9 +48,9 @@ function loadPet() {
         let image = pet.photos[0]
           ? pet.photos[0].medium
           : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
-        let name = pet.name ? pet.name : "Unknown";
+        let name = pet.name ? formatString(pet.name) : "Unknown";
         //The description needs to be modified to replace
-        let desc = pet.description ? pet.description : "";
+        let desc = pet.description ? formatString(pet.description) : "";
         const element = (
           <div>
             <img src={image} className="pet-pic" />
