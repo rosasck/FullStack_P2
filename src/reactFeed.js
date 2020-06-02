@@ -5,8 +5,13 @@ import ReactDOM from 'react-dom'
 import {fetchToken} from './authorizationKey'
 import {getToken} from './authorizationKey'
 */
+let baseAnimalUrl;
+let param = localStorage.getItem('parameters');
+if(param)
+  baseAnimalUrl = `https://api.petfinder.com/v2/animals?sort=recent&status=adoptable${param}`;
+else
+  baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=recent&status=adoptable";
 
-const baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=random";
 let animalUrl = baseAnimalUrl;
 const card = {
   display: "flex",

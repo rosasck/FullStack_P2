@@ -45,15 +45,21 @@
           <div class="form-group row">           
             <div class="col-sm-3 mb-3">
               <label for="zip-code">Zip Code:</label>
-              <input type="text" id="zipcode">
+              <!--<input type="text" id="zipcode">-->
+              <input type="number" id="zipcode">
             </div>
             <div class="col-md-6 mb-3">
               <label for="distance">Distance from me</label>
               <select id="distance">
                 <option value="25">25 miles</option>
+                <!--   
                 <option value="50">26 - 50 miles</option>
                 <option value="100">51 - 100 miles</option>
                 <option value="500">100+ miles</option>
+              -->
+                <option value="50">50 miles</option>
+                <option value="100">100 miles</option>
+                <option value="500">500 miles</option>
               </select>
             </div>
           </div>
@@ -160,7 +166,8 @@
 
           <!--Update/Save-->
         </div>
-        <button type="submit" class="btn btn-outline-danger btn-sm" onclick = "test()">Update Filters</button>
+        <!--<button type="submit" class="btn btn-outline-danger btn-sm" onclick = "test()">Update Filters</button>-->
+        <button type="submit" class="btn btn-outline-danger btn-sm" onclick = "updateFilters()">Update Filters</button>
 
       </form>
     </section>
