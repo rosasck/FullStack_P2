@@ -106,7 +106,7 @@ class PetInfo extends React.Component {
           //Checks if there are any more animals to display
           //If not, there will also be no more pages to look through.
           /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
-          if (data.animals.length === 0) throw new Error("No Animals");
+          if (!data.animals || data.animals.length === 0) throw new Error("No Animals");
 
           this.petArray = data.animals;
           this.index = 0;
@@ -129,7 +129,7 @@ class PetInfo extends React.Component {
         })
         .catch((error) => {
           //Handles if an authorization token has expired.
-          if (error.message.includes("Failed to fetch")) {
+          if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
             //This calls handleClick multiple times before the getToken finishes for some reason...
             //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
             getToken()

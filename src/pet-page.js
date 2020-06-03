@@ -81,7 +81,7 @@ function loadPet() {
           );
         }
         //If a token is expired, gets new authorization token & re-runs the function.
-        else if (error.message.includes("Failed to fetch")) {
+        else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
           getToken()
             .then(loadPet)
             .catch((err) => {

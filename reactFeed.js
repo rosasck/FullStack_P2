@@ -121,7 +121,7 @@ var PetInfo = function (_React$Component) {
           //Checks if there are any more animals to display
           //If not, there will also be no more pages to look through.
           /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
-          if (data.animals.length === 0) throw new Error("No Animals");
+          if (!data.animals || data.animals.length === 0) throw new Error("No Animals");
 
           _this2.petArray = data.animals;
           _this2.index = 0;
@@ -143,7 +143,7 @@ var PetInfo = function (_React$Component) {
           });
         }).catch(function (error) {
           //Handles if an authorization token has expired.
-          if (error.message.includes("Failed to fetch")) {
+          if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
             //This calls handleClick multiple times before the getToken finishes for some reason...
             //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
             getToken().then(_this2.handleClick()).catch(function (err) {
