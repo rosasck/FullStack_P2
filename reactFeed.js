@@ -94,8 +94,19 @@ class PetInfo extends React.Component{
                    //The description needs to be modified to replace 
                    newDesc = pet.description ? pet.description : "";
                    newId = pet.id;
+                   console.log(newId);
                    ++this.index;
+/*                
+                BOTH OF THESE LOAD BEFORE THE JS SO IT MESSES IT UP... 
+                <script>
 
+              //   let idpet= newId; 
+                // <?php petDBInsert(idpet);?>
+
+                </script>
+
+                 document.write(' <?php petDBInsert(idpet);?> ');
+*/
                    this.setState(state => ({
                     image: newImage,
                     name: newName,
