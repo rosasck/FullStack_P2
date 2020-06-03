@@ -43,16 +43,30 @@ const petData = {
 
 let id=0;
 function loadPets(petId){
+
+
      id = petId;
      let petIDUrl = `https://api.petfinder.com/v2/animals/${id}`;
-  fetch(petIDUrl, {
+     
+     if(!token){
+      getToken()
+      .catch(err=>{
+          console.log(`ERROR MESSAGE: ${err}`);
+      });
+  }
+  
+     fetch(petIDUrl, {
       headers:{
           'Authorization': `Bearer ${token}`,
   }})
+
+
+
   .then(response=>{return response.json();})
+
+
   .then(data=>
       {
-        //TAYLOR CODE 
         if(data.status)
         {
             const error = new Error(data.title);
@@ -62,15 +76,19 @@ function loadPets(petId){
            let pet = data.animal;
            let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            let name = pet.name ? pet.name : "Unknown";
+
+
+
            const element = (
                <div>
                    <img src = {image} className = "pet-pic"/>
                    <div className = "pet-info-more">
                        <h1>{name}</h1>
-                       <p>{desc}</p>
                    </div>
                </div>
            );
+           //make this a creae element to append to the root element, This is how we can get 
+           //more than one pet on this page :)
            ReactDOM.render(element, document.getElementById('root'));
       })
       .catch(error =>{
@@ -80,26 +98,30 @@ function loadPets(petId){
         //If a token is expired, gets new authorization token & re-runs the function.
         else if(error.message.includes("Failed to fetch"))
         {
-            getToken().then(loadPet(this.petId)).catch(err=>{console.log(err);});
+            getToken().then(loadPets(petId)).catch(err=>{console.log(err);});
         }
         else{
              console.log('ERROR MESSAGE: ', error.message);
          }
      });
   
-  }
+ 
+ 
+ 
+    }
     
 
 function allPets(){
  petArray.forEach(element => {
-   // this.loadPets(element);
+   loadPets(element);
    console.log(element);
   });
 }
 addPet(47929706);
 addPet(47567601);
 addPet(47058934);
-addPet(48097357);
+//addPet(48097357);
 allPets();
 
-loadPets(48097357);
+
+//loadPets(48097357);
