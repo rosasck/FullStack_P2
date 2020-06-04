@@ -1,3 +1,10 @@
+
+var petArray=[];
+function addPet(petId){
+  petArray.push(petId);
+}
+
+//import {setPetID, loadPet  } from "./pet-page.js";
 const card = {
   display: 'flex',
   flexDirection: 'column',
@@ -21,32 +28,100 @@ const info= {
   margin: 15,
   backgroundColor: '#FBC4AB',
 }
-
-class SavedPets extends React.Component{
-  constructor(props)
-  {
-      super(props);
-      this.state = {
-          image: "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg",
-          name: "No Name",
-          description: "No Description",
-          petId: 0,
-      }
-  } 
-
-  render(){
-    return(
-        <div className = "savedPetsPlace">
-            <div style = {card} className = "card">
-                <img style = {picture} src = {this.state.image} alt = "A pet"/>
-            </div>
-            <div style = {card} className = "card">
-                <img style = {picture} src = {this.state.image} alt = "A pet"/>
-            </div>
-        </div>
-    );
+const petInfo = {
+  width: 380,
+  borderRadius: 8,
+  padding: 15,
+  margin: 15,
+  backgroundColor: '#FBC4AB',
+}
+const petData = {
+  backgroundColor:'#FBC4AB',
 }
 
 
+
+let id=0;
+function loadPets(petId){
+
+
+     id = petId;
+     let petIDUrl = `https://api.petfinder.com/v2/animals/${id}`;
+     
+     if(!token){
+      getToken()
+      .catch(err=>{
+          console.log(`ERROR MESSAGE: ${err}`);
+      });
+  }
+  
+     fetch(petIDUrl, {
+      headers:{
+          'Authorization': `Bearer ${token}`,
+  }})
+
+
+
+  .then(response=>{return response.json();})
+
+
+  .then(data=>
+      {
+        if(data.status)
+        {
+            const error = new Error(data.title);
+            error.code = data.status;
+            throw error;
+        }
+           let pet = data.animal;
+           let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
+           let name = pet.name ? pet.name : "Unknown";
+
+
+
+           const element = (
+               <div>
+                   <img src = {image} className = "pet-pic"/>
+                   <div className = "pet-info-more">
+                       <h1>{name}</h1>
+                   </div>
+               </div>
+           );
+           //make this a creae element to append to the root element, This is how we can get 
+           //more than one pet on this page :)
+           ReactDOM.render(element, document.getElementById('root'));
+      })
+      .catch(error =>{
+        if(error.code){
+             console.log(`AHHHH ERROR STATUS: ${error.code} ERROR MESSAGE: ${error.message}`);
+        }
+        //If a token is expired, gets new authorization token & re-runs the function.
+        else if(error.message.includes("Failed to fetch"))
+        {
+            getToken().then(loadPets(petId)).catch(err=>{console.log(err);});
+        }
+        else{
+             console.log('ERROR MESSAGE: ', error.message);
+         }
+     });
+  
+ 
+ 
+ 
+    }
+    
+
+function allPets(){
+ petArray.forEach(element => {
+   loadPets(element);
+   console.log(element);
+  });
 }
-ReactDOM.render(<SavedPets/>, document.getElementById('root'));
+addPet(47929706);
+addPet(47567601);
+addPet(47058934);
+//addPet(48097357);
+allPets();
+
+
+//loadPets(48097357);
