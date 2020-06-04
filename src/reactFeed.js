@@ -74,7 +74,7 @@ class PetInfo extends React.Component {
       getToken()
         .then(this.handleClick())
         .catch((err) => {
-          console.log(`ERROR MESSAGE: ${err}`);
+          console.log(`Failed in constructor: ${err}`);
         });
     } else {
       this.handleClick();
