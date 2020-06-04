@@ -79,7 +79,7 @@ var PetInfo = function (_React$Component) {
         else{
             console.log(`fail`);
         }*/
-    if (!token) {
+    if (!localStorage.getItem('token')) {
       getToken().then(_this.handleClick()).catch(function (err) {
         console.log("ERROR MESSAGE: " + err);
       });
@@ -101,7 +101,7 @@ var PetInfo = function (_React$Component) {
           newDesc = void 0,
           newId = void 0;
 
-      /*** TO DO: GET FILTERS ***/
+      var token = localStorage.getItem('token');
 
       //Fetches another page of results from API
       if (!this.petArray || this.index >= this.petArray.length) {
@@ -110,49 +110,57 @@ var PetInfo = function (_React$Component) {
           ++this.page;
           animalUrl = baseAnimalUrl + ("&page=" + this.page);
         }
+
         //Makes a GET request for that page.
-        fetch(animalUrl, {
-          headers: {
-            Authorization: "Bearer " + token
-          }
-        }).then(function (response) {
-          return response.json();
-        }).then(function (data) {
-          //Checks if there are any more animals to display
-          //If not, there will also be no more pages to look through.
-          /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
-          if (!data.animals || data.animals.length === 0) throw new Error("No Animals");
+        try {
 
-          _this2.petArray = data.animals;
-          _this2.index = 0;
-          var pet = data.animals[_this2.index];
-          newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
-          newName = pet.name ? formatString(pet.name) : "Unknown";
-          //The description needs to be modified to replace
-          newDesc = pet.description ? formatString(pet.description) : "";
-          newId = pet.id;
-          ++_this2.index;
+          fetch(animalUrl, {
+            headers: {
+              Authorization: "Bearer " + token
+            }
+          }).then(function (response) {
+            return response.json();
+          }).then(function (data) {
+            //Checks if there are any more animals to display
+            //If not, there will also be no more pages to look through.
+            /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
+            if (!data.animals || data.animals.length === 0) throw new Error("No Animals");
 
-          _this2.setState(function (state) {
-            return {
-              image: newImage,
-              name: newName,
-              description: newDesc,
-              petId: newId
-            };
-          });
-        }).catch(function (error) {
-          //Handles if an authorization token has expired.
-          if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-            //This calls handleClick multiple times before the getToken finishes for some reason...
-            //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
-            getToken().then(_this2.handleClick()).catch(function (err) {
-              console.log("ERROR MESSAGE: " + err);
+            _this2.petArray = data.animals;
+            _this2.index = 0;
+            var pet = data.animals[_this2.index];
+            newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
+            newName = pet.name ? formatString(pet.name) : "Unknown";
+            //The description needs to be modified to replace
+            newDesc = pet.description ? formatString(pet.description) : "";
+            newId = pet.id;
+            ++_this2.index;
+
+            _this2.setState(function (state) {
+              return {
+                image: newImage,
+                name: newName,
+                description: newDesc,
+                petId: newId
+              };
             });
-          } else {
-            console.log("ERROR MESSAGE: ", error.message);
-          }
-        });
+          }).catch(function (error) {
+            //Handles if an authorization token has expired.
+            if (error.message.includes("Failed to fetch")) {
+              //This calls handleClick multiple times before the getToken finishes for some reason...
+              //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
+              getToken().then(_this2.handleClick()).catch(function (err) {
+                console.log("ERROR MESSAGE: " + err);
+              });
+            } else {
+              console.log("ERROR MESSAGE: ", error.message);
+            }
+          });
+        } catch (error) {
+          getToken().then(this.handleClick()).catch(function (err) {
+            console.log(err);
+          });
+        }
       } else {
         var pet = this.petArray[this.index];
         newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";

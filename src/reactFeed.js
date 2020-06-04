@@ -70,7 +70,7 @@ class PetInfo extends React.Component {
         else{
             console.log(`fail`);
         }*/
-    if (!token) {
+    if (!localStorage.getItem('token')) {
       getToken()
         .then(this.handleClick())
         .catch((err) => {
@@ -84,7 +84,7 @@ class PetInfo extends React.Component {
   handleClick() {
     let newImage, newName, newDesc, newId;
 
-    /*** TO DO: GET FILTERS ***/
+    let token = localStorage.getItem('token');
 
     //Fetches another page of results from API
     if (!this.petArray || this.index >= this.petArray.length) {
@@ -93,7 +93,10 @@ class PetInfo extends React.Component {
         ++this.page;
         animalUrl = baseAnimalUrl + `&page=${this.page}`;
       }
+
       //Makes a GET request for that page.
+      try{
+
       fetch(animalUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -129,7 +132,7 @@ class PetInfo extends React.Component {
         })
         .catch((error) => {
           //Handles if an authorization token has expired.
-          if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+          if (error.message.includes("Failed to fetch")){
             //This calls handleClick multiple times before the getToken finishes for some reason...
             //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
             getToken()
@@ -141,6 +144,14 @@ class PetInfo extends React.Component {
             console.log("ERROR MESSAGE: ", error.message);
           }
         });
+      }catch(error)
+      {
+        getToken()
+        .then(this.handleClick())
+        .catch((err) => {
+          console.log(err);
+        });
+      }
     } else {
       let pet = this.petArray[this.index];
       newImage = pet.photos[0]

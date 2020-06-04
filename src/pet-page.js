@@ -25,6 +25,9 @@ function loadPet() {
     ReactDOM.render(element, document.getElementById("root"));
   } else {
     let petIDUrl = `https://api.petfinder.com/v2/animals/${id}`;
+    let token = localStorage.getItem('token');
+
+    try{
     fetch(petIDUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -81,7 +84,7 @@ function loadPet() {
           );
         }
         //If a token is expired, gets new authorization token & re-runs the function.
-        else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+        else if (error.message.includes("Failed to fetch")) {
           getToken()
             .then(loadPet)
             .catch((err) => {
@@ -91,5 +94,13 @@ function loadPet() {
           console.log("ERROR MESSAGE: ", error.message);
         }
       });
+    }catch(error)
+    {
+      getToken()
+      .then(loadPet)
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   }
 }

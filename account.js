@@ -83,278 +83,295 @@ function updateFilters() {
     var coat = $('#coat').val();
 
     const getAnimalTypeURL = "https://api.petfinder.com/v2/types";
-    fetch(getAnimalTypeURL, {
-        headers: {
-        Authorization: "Bearer " + token
-        }
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-            // A dictionary to map the type of data to any invalid data items provided by the user
-        //This will be used to display an error message of all invalid data provided.
-        let invalidData = {
-            Breed: [],
-            Colors: [],
-            Coat: [],
-        };
-        const validData = data.types;
-        let savedColors = [];
-        let foundColors = [];
-        var allowedValues;
-        console.log(type);
-        switch(type){
-            case "Dog":
-
-                param += "&type=Dog";
-                allowedValues = validData[0];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Cat":
-                param += "&type=Cat";
-                allowedValues = validData[1];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);;
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Rabbit":
-                param += '&type=Rabbit';
-                allowedValues = validData[2];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Small & Furry":
-                param += `&type=${encodeURIComponent('Small & Furry')}`;
-                allowedValues = validData[3];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Horse":
-                param += "&type=Horse";
-                allowedValues = validData[4];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Bird":
-                param += '&type=Bird';
-                allowedValues = validData[5];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Scales, Fins & Other":
-                param += `&type=${encodeURIComponent('Scales, Fins & Other')}`;
-                allowedValues = validData[6];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            case "Barnyard":
-                param += '&type=Barnyard';
-                allowedValues = validData[7];
-
-                if(!allowedValues)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-            default:
-                let validColors = [];
-                //let validBreeds;
-                //let validCoat;
-                if(!validData)
-                {
-                    alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
-                }
-                else
-                {
-                    for(let i = 0; i < validData.length; ++i)
-                    {
-                        //validBreeds.concat(validData[i].breeds)
-                        validColors = validColors.concat(validData[i].colors);
-                    }
-
-                    if(breed && breed.length > 0)
-                    {
-                        
-                    }
-
-                    let returnVal = validateColor(validColors, colors, invalidData, param);
-                    invalidData = returnVal.invalidData;
-                    param = returnVal.param
-
-                    if(coat && coat.length > 0)
-                    {
-
-                    }
-                }
-                break;
-
-        }
-            
-            console.log(param);
-            localStorage.setItem("parameters", param);
-            
-    })
-    .catch(function (error) {
-        if (error.code) {
-        console.log("ERROR STATUS: " + error.code + " ERROR MESSAGE: " + error.message);
-        }
-        //If a token is expired, gets new authorization token & re-runs the function.
-        else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-            getToken().then(updateFilters()).catch((err)=>{
+    let token = localStorage.getItem('token');
+    /*
+    if(!token)
+    {
+        getToken()
+        .then(token = localStorage.getItem('token');).catch((err)=>{
             console.log(err);
             });
-        } else {
-            console.log("ERROR MESSAGE: ", error.message);
-        }
-    });
+        token = localStorage.getItem('token');
+    }*/
+    try{
+        fetch(getAnimalTypeURL, {
+            headers: {
+            Authorization: "Bearer " + token
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+                // A dictionary to map the type of data to any invalid data items provided by the user
+            //This will be used to display an error message of all invalid data provided.
+            let invalidData = {
+                Breed: [],
+                Colors: [],
+                Coat: [],
+            };
+            const validData = data.types;
+            let savedColors = [];
+            let foundColors = [];
+            var allowedValues;
+            console.log(type);
+            switch(type){
+                case "Dog":
+
+                    param += "&type=Dog";
+                    allowedValues = validData[0];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Cat":
+                    param += "&type=Cat";
+                    allowedValues = validData[1];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);;
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Rabbit":
+                    param += '&type=Rabbit';
+                    allowedValues = validData[2];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Small & Furry":
+                    param += `&type=${encodeURIComponent('Small & Furry')}`;
+                    allowedValues = validData[3];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Horse":
+                    param += "&type=Horse";
+                    allowedValues = validData[4];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Bird":
+                    param += '&type=Bird';
+                    allowedValues = validData[5];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Scales, Fins & Other":
+                    param += `&type=${encodeURIComponent('Scales, Fins & Other')}`;
+                    allowedValues = validData[6];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                case "Barnyard":
+                    param += '&type=Barnyard';
+                    allowedValues = validData[7];
+
+                    if(!allowedValues)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+                default:
+                    let validColors = [];
+                    //let validBreeds;
+                    //let validCoat;
+                    if(!validData)
+                    {
+                        alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
+                    }
+                    else
+                    {
+                        for(let i = 0; i < validData.length; ++i)
+                        {
+                            //validBreeds.concat(validData[i].breeds)
+                            validColors = validColors.concat(validData[i].colors);
+                        }
+
+                        if(breed && breed.length > 0)
+                        {
+                            
+                        }
+
+                        let returnVal = validateColor(validColors, colors, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param
+
+                        if(coat && coat.length > 0)
+                        {
+
+                        }
+                    }
+                    break;
+
+            }
+            console.log(param);
+            localStorage.setItem("parameters", param);
+        })
+        .catch(function (error) {
+            if (error.code) {
+            console.log("ERROR STATUS: " + error.code + " ERROR MESSAGE: " + error.message);
+            }
+            //If a token is expired, gets new authorization token & re-runs the function.
+            else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+                getToken().then(updateFilters).catch((err)=>{
+                console.log(err);
+                });
+            } else {
+                console.log("ERROR MESSAGE: ", error.message);
+            }
+        });
+    }catch(error)
+    {
+        getToken()
+        .then(updateFilters)
+        .catch((err) => {
+            console.log(err);
+        });
+    }
 }
 
 function formatCapitilization(array){
@@ -438,6 +455,8 @@ function validateColor(validColors, colors, invalidData, param)
 function getAnimalTypes()
 {
     const getAnimalTypeURL = "https://api.petfinder.com/v2/types";
+    let token = localStorage.getItem('token');
+    try{
     fetch(getAnimalTypeURL, {
         headers: {
           Authorization: "Bearer " + token
@@ -461,6 +480,14 @@ function getAnimalTypes()
             console.log("ERROR MESSAGE: ", error.message);
           }
       });
+    }catch(error)
+    {
+      getToken()
+      .then(getAnimalTypes())
+      .catch((err) => {
+        console.log(err);
+      });
+    }
 }
 
-getAnimalTypes();
+//getAnimalTypes();

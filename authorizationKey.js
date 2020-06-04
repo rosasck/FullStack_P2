@@ -1,4 +1,4 @@
-var token; 
+//var token; 
 const clientID = 'q8AtF9GiFiVL0k38sSW1zDpA3FazOBFL1zUXxO86J7jqgN3TxW';
 const clientSecret = 'VGwQffQcjmWOpL3FBRDQiWdHBvFXkg67MFp623nm';
 const tokenUrl = 'https://api.petfinder.com/v2/oauth2/token';
@@ -12,7 +12,7 @@ function getToken(){
             headers: new Headers({'content-type': 'application/x-www-form-urlencoded'}),
            body: `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`,
         }).then((response)=>{return response.json()})
-        .then(object=>{token = object.access_token; resolve('token was updated');})
+        .then(object=>{/*token = object.access_token*/ localStorage.setItem("token", object.access_token); resolve('token was updated');})
         .catch((error)=>{console.log(`ERROR MESSAGE: ${error}`); reject('failed while updating token');});
     });
 }
