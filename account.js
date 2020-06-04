@@ -30,7 +30,7 @@ function test() {
 
 //NEED FUNCTION TO LOAD SAVED FILTERS FROM PARAMETERS
 
-function updateFilters() {
+async function updateFilters() {
     let param = "";
 
     /*zipcode & distance should probably pair together*/
@@ -123,11 +123,6 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -135,6 +130,34 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
 
                     }
                     break;
@@ -148,11 +171,6 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -160,6 +178,35 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 case "Rabbit":
@@ -172,11 +219,6 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -184,6 +226,35 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 case "Small & Furry":
@@ -196,11 +267,6 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -208,6 +274,35 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 case "Horse":
@@ -220,18 +315,42 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 case "Bird":
@@ -244,11 +363,6 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -256,6 +370,35 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 case "Scales, Fins & Other":
@@ -268,11 +411,6 @@ function updateFilters() {
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -280,23 +418,46 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 case "Barnyard":
                     param += '&type=Barnyard';
                     allowedValues = validData[7];
-
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
@@ -304,11 +465,40 @@ function updateFilters() {
                         returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${allowedValues._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    invalidData = returnVal.invalidData;
+                                    param = returnVal.param;
+                                    console.log(param);
+                                    localStorage.setItem("parameters", param);
+                                    return true;
+                                })
+                                .catch(error=>{console.log(error);});
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            return true;
+
+                        }
+
                     }
                     break;
                 default:
                     let validColors = [];
-                    //let validBreeds;
+                    let validBreeds = new Array();
                     let validCoats = ['Short', 'Medium', 'Long', 'Wire', 'Hairless', 'Curly'];
                     if(!validData)
                     {
@@ -322,11 +512,6 @@ function updateFilters() {
                             validColors = validColors.concat(validData[i].colors);
                         }
 
-                        if(breed && breed.length > 0)
-                        {
-                            
-                        }
-
                         let returnVal = validateColor(validColors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param
@@ -334,12 +519,251 @@ function updateFilters() {
                         returnVal = validateCoat(validCoats, coats, invalidData, param);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+    
+                        if(breeds && breeds.length > 0)
+                        {
+                            fetch(`https://api.petfinder.com${validData[0]._links.breeds.href}`, {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              })
+                                .then((response) => {
+                                  return response.json();
+                                })
+                                .then((data) => {
+                                    validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds}`);
+
+
+
+                                    fetch(`https://api.petfinder.com${validData[1]._links.breeds.href}`, {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      })
+                                        .then((response) => {
+                                          return response.json();
+                                        })
+                                        .then((data) => {
+                                    validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds}`);
+        
+        
+        
+                                            fetch(`https://api.petfinder.com${validData[2]._links.breeds.href}`, {
+                                                headers: {
+                                                  Authorization: `Bearer ${token}`,
+                                                },
+                                              })
+                                                .then((response) => {
+                                                  return response.json();
+                                                })
+                                                .then((data) => {
+                                                    validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds}`);
+                
+                
+                
+                
+                                                    fetch(`https://api.petfinder.com${validData[3]._links.breeds.href}`, {
+                                                        headers: {
+                                                          Authorization: `Bearer ${token}`,
+                                                        },
+                                                      })
+                                                        .then((response) => {
+                                                          return response.json();
+                                                        })
+                                                        .then((data) => {
+                                                            validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds}`);
+                        
+                        
+                        
+                                                            fetch(`https://api.petfinder.com${validData[4]._links.breeds.href}`, {
+                                                                headers: {
+                                                                  Authorization: `Bearer ${token}`,
+                                                                },
+                                                              })
+                                                                .then((response) => {
+                                                                  return response.json();
+                                                                })
+                                                                .then((data) => {
+                                                                    validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds}`);
+                                
+                                
+                                
+                                                                    fetch(`https://api.petfinder.com${validData[5]._links.breeds.href}`, {
+                                                                        headers: {
+                                                                          Authorization: `Bearer ${token}`,
+                                                                        },
+                                                                      })
+                                                                        .then((response) => {
+                                                                          return response.json();
+                                                                        })
+                                                                        .then((data) => {
+                                                                            validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds.length}`);
+                                        
+                                        
+                                        
+                                        
+                                                                            fetch(`https://api.petfinder.com${validData[6]._links.breeds.href}`, {
+                                                                                headers: {
+                                                                                  Authorization: `Bearer ${token}`,
+                                                                                },
+                                                                              })
+                                                                                .then((response) => {
+                                                                                  return response.json();
+                                                                                })
+                                                                                .then((data) => {
+                                                                                    validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds.length}`);
+                                                
+                                                
+                                                
+                                                                                    fetch(`https://api.petfinder.com${validData[7]._links.breeds.href}`, {
+                                                                                        headers: {
+                                                                                          Authorization: `Bearer ${token}`,
+                                                                                        },
+                                                                                      })
+                                                                                        .then((response) => {
+                                                                                          return response.json();
+                                                                                        })
+                                                                                        .then((data) => {
+                                                                                            validBreeds = validBreeds.concat(data.breeds);
+                                    console.log(`Display valdBreeds: ${validBreeds.length}`);
+                                                                                            let returnVal = validateBreed(validBreeds, breeds, invalidData, param);
+                                                                                            invalidData = returnVal.invalidData;
+                                                                                            param = returnVal.param;
+                                                                                            console.log(param);
+                                                                                            localStorage.setItem("parameters", param);
+                                                                                            return true;
+                                                                                        })
+                                                                                        .catch(error=>{console.log(error);});
+                                                
+                                                
+                                                
+                                                
+                                                                                    
+                                                                                })
+                                                                                .catch(error=>{console.log(error);});
+                                        
+                                        
+                                        
+                                                                            
+                                                                        })
+                                                                        .catch(error=>{console.log(error);});
+                                
+                                
+                                
+                                
+                                                                    
+                                                                })
+                                                                .catch(error=>{console.log(error);});
+                        
+                        
+                        
+                        
+                                                            
+                                                        })
+                                                        .catch(error=>{console.log(error);});
+                
+                
+                
+                                                    
+                                                })
+                                                .catch(error=>{console.log(error);});
+        
+        
+        
+        
+                                            
+                                        })
+                                        .catch(error=>{console.log(error);});
+
+
+
+
+
+                                })
+                                .catch(error=>{console.log(error);});
+
+                        }
+                            /*function getAllBreeds(validBreeds, validData, index)
+                            {
+                                if(index > 7)
+                                
+                                    return validBreeds;
+                                await fetch(`https://api.petfinder.com${validData[index]._links.breeds.href}`, {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                                })
+                                .then((response) => {
+                                    return response.json();
+                                })
+                                .then((data) => {
+                                    validBreeds.concat(data.breeds);
+                                    return getAllBreeds(validBreeds, validData, index + 1);
+                                })
+                                .catch(error=>{console.log(error);
+                                    return null;});
+                                }
+                            }
+                            validBreeds = getAllBreeds(validBreeds, validData, 0);
+                        
+*/
+/*
+                        async function getAllBreeds(validBreeds, validData, invalidData, param){
+                           // return new Promise((resolve, reject)=>{
+
+                                for(let i = 0; i < validData.length; ++i)
+                                {
+                                    let data = await fetch(`https://api.petfinder.com${validData[i]._links.breeds.href}`, {
+                                    headers: {
+                                        Authorization: `Bearer ${token}`,
+                                    }
+                                    });
+
+                                    data = await data.json();
+                                    if(data && data.breeds)
+                                    {
+                                        validBreeds.concat(data.breeds);
+                                    }
+                                    else
+                                    {
+                                        console.log(`ERROR FROM ALL BREEDS: ${data}`);
+                                    }
+                                }
+
+                                let returnVal = validateBreed(validBreeds, breeds, invalidData, param);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                return true;
+
+                            //});
+                        }
+                        getAllBreeds(validBreeds, validData, invalidData, param);
                     }
+                    else
+                    {
+                        console.log(param);
+                        localStorage.setItem("parameters", param);
+                        return true;
+
+                    }
+                }
+                */
+
                     break;
 
             }
-            console.log(param);
-            localStorage.setItem("parameters", param);
+        }
+        /*    console.log(param);
+            localStorage.setItem("parameters", param);*/
         })
         .catch((error) => {
             if (error.code) {
@@ -371,10 +795,85 @@ function updateFilters() {
 function formatCapitilization(array){
     for(let i = 0; i< array.length; ++i)
     {
+        array[i] = formatString(array[i]);
         array[i] = array[i].toLowerCase();
         array[i] = array[i].charAt(0).toUpperCase() + array[i].substr(1);
+        for(let j = 0; j < array[i].length -1; ++j)
+        {
+            if(array[i].charAt(j) == ' ')
+                array[i] = array[i].charAt(j+1).toUpperCase() + array[i].substr(j + 2);
+        }
     }
     return array;
+}
+function validateBreed(validBreeds, breeds, invalidData, param)
+{ 
+    let savedBreeds = [];
+    let foundBreeds = [];
+
+    if(!validBreeds)
+    {
+        alert("Something went wrong when trying to validate the breeds you selected. Some or all breeds selected may not be added as filters");
+    }
+    else
+    {
+        if(breeds && breeds.length > 0)
+        {
+            console.log(validBreeds);
+            breeds = formatCapitilization(breeds);
+
+            //Loops through every valid color for the animal type
+            //Anytime a color provided by the user is found to match 
+            //a valid color, is added to the savedColor List.
+            //This continues until there are no more valid colors to compare to.
+            outerLoop:
+            for(let i = 0; i < validBreeds.length; ++i)
+            {
+                if(validBreeds[i].name.includes(','))
+                    continue;
+
+                for(let j = 0; j < breeds.length; ++j)
+                {
+                    if(breeds[j] && validBreeds[i].name.includes(breeds[j]))
+                    {
+                        if(savedBreeds && !savedBreeds.includes(validBreeds[i].name))
+                        {
+                            let formattedParameter = encodeURIComponent(validBreeds[i].name);
+                            savedBreeds.push(formattedParameter);
+                           // savedColors.push(validColors[i]);
+                        }
+                        if(foundBreeds && !foundBreeds.includes(breeds[j]))
+                            foundBreeds.push(breeds[j]);
+                    }
+                }
+            }
+            //Adds all valid colors to the Filters
+            if(savedBreeds && savedBreeds.length > 0)
+            {
+                param += '&breed='
+                for(let i = 0; i < (savedBreeds.length - 1); ++i)
+                {
+                    param += `${savedBreeds[i]},`;
+                }
+                param += `${savedBreeds[savedBreeds.length - 1]}`;
+            }
+
+            //Adds all invalid colors to the invalidData dictionary
+            if(!foundBreeds || foundBreeds.length != breeds.length)
+            {
+                breeds.forEach(breed=>{
+                    if(!foundBreeds.includes(breed))
+                        invalidData["Breeds"].push(breed);
+                })
+            }
+            else
+                console.log(foundBreeds);
+            if(savedBreeds)
+                console.log(savedBreeds);
+            console.log(invalidData);
+        }
+    }
+    return {invalidData, param};
 }
 
 function validateColor(validColors, colors, invalidData, param)

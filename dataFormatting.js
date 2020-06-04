@@ -1,4 +1,5 @@
 function formatString(toFormat) {
+  toFormat = toFormat.replace(/&nbsp;/g, " ");
   toFormat = toFormat.replace(/&amp;#39;/g, "'");
   toFormat = toFormat.replace(/&#039;/g, "'");
   toFormat = toFormat.replace(/&quot;/g, '"');
