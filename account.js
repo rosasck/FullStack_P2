@@ -78,9 +78,9 @@ function updateFilters() {
 
     // array of serach items is returned for breed, color, coat
     //Validate through API
-    var breed = $('#breed').val();
+    var breeds = $('#breed').val();
     var colors = $('#color').val();
-    var coat = $('#coat').val();
+    var coats = $('#coat').val();
 
     const getAnimalTypeURL = "https://api.petfinder.com/v2/types";
     let token = localStorage.getItem('token');
@@ -98,19 +98,17 @@ function updateFilters() {
             headers: {
             Authorization: "Bearer " + token
             }
-        }).then(function (response) {
+        }).then((response) => {
             return response.json();
-        }).then(function (data) {
+        }).then((data) => {
                 // A dictionary to map the type of data to any invalid data items provided by the user
             //This will be used to display an error message of all invalid data provided.
             let invalidData = {
-                Breed: [],
+                Breeds: [],
                 Colors: [],
-                Coat: [],
+                Coats: [],
             };
             const validData = data.types;
-            let savedColors = [];
-            let foundColors = [];
             var allowedValues;
             console.log(type);
             switch(type){
@@ -132,12 +130,12 @@ function updateFilters() {
 
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
 
-                        }
                     }
                     break;
                 case "Cat":
@@ -155,14 +153,13 @@ function updateFilters() {
                             
                         }
 
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);;
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 case "Rabbit":
@@ -182,12 +179,11 @@ function updateFilters() {
 
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 case "Small & Furry":
@@ -207,12 +203,11 @@ function updateFilters() {
 
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 case "Horse":
@@ -234,10 +229,9 @@ function updateFilters() {
                         invalidData = returnVal.invalidData;
                         param = returnVal.param
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 case "Bird":
@@ -257,12 +251,11 @@ function updateFilters() {
 
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 case "Scales, Fins & Other":
@@ -282,12 +275,11 @@ function updateFilters() {
 
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 case "Barnyard":
@@ -307,18 +299,17 @@ function updateFilters() {
 
                         let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
                         invalidData = returnVal.invalidData;
-                        param = returnVal.param
+                        param = returnVal.param;
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
                 default:
                     let validColors = [];
                     //let validBreeds;
-                    //let validCoat;
+                    let validCoats = ['Short', 'Medium', 'Long', 'Wire', 'Hairless', 'Curly'];
                     if(!validData)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
@@ -340,10 +331,9 @@ function updateFilters() {
                         invalidData = returnVal.invalidData;
                         param = returnVal.param
 
-                        if(coat && coat.length > 0)
-                        {
-
-                        }
+                        returnVal = validateCoat(validCoats, coats, invalidData, param);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
                     }
                     break;
 
@@ -351,25 +341,29 @@ function updateFilters() {
             console.log(param);
             localStorage.setItem("parameters", param);
         })
-        .catch(function (error) {
+        .catch((error) => {
             if (error.code) {
             console.log("ERROR STATUS: " + error.code + " ERROR MESSAGE: " + error.message);
             }
             //If a token is expired, gets new authorization token & re-runs the function.
             else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-                getToken().then(updateFilters).catch((err)=>{
+                getToken()
+                .then(response=>{updateFilters();})
+                .catch((err)=>{
                 console.log(err);
                 });
             } else {
                 console.log("ERROR MESSAGE: ", error.message);
             }
         });
+        return true;
     }catch(error)
     {
         getToken()
-        .then(updateFilters)
-        .catch((err) => {
-            console.log(err);
+        .then(response=>{updateFilters();})
+        .catch((err)=>{
+        console.log(err);
+        return false;
         });
     }
 }
@@ -406,6 +400,8 @@ function validateColor(validColors, colors, invalidData, param)
             outerLoop:
             for(let i = 0; i < validColors.length; ++i)
             {
+                if(validColors[i].includes(','))
+                    continue;
 
                 for(let j = 0; j < colors.length; ++j)
                 {
@@ -415,6 +411,7 @@ function validateColor(validColors, colors, invalidData, param)
                         {
                             let formattedParameter = encodeURIComponent(validColors[i]);
                             savedColors.push(formattedParameter);
+                           // savedColors.push(validColors[i]);
                         }
                         if(foundColors && !foundColors.includes(colors[j]))
                             foundColors.push(colors[j]);
@@ -422,7 +419,7 @@ function validateColor(validColors, colors, invalidData, param)
                 }
             }
             //Adds all valid colors to the Filters
-            if(savedColors)
+            if(savedColors && savedColors.length > 0)
             {
                 param += '&color='
                 for(let i = 0; i < (savedColors.length - 1); ++i)
@@ -444,6 +441,66 @@ function validateColor(validColors, colors, invalidData, param)
                 console.log(foundColors);
             if(savedColors)
                 console.log(savedColors);
+            console.log(invalidData);
+        }
+    }
+    return {invalidData, param};
+}
+
+function validateCoat(validCoats, coats, invalidData, param)
+{ 
+    let savedCoats = [];
+
+    if(!validCoats)
+    {
+        coats.forEach(coat=>{
+            invalidData["Coats"].push(coat);
+        })
+    }
+    else
+    {
+        if(coats && coats.length > 0)
+        {
+            console.log(validCoats);
+            coats = formatCapitilization(coats);
+
+            for(let i = 0; i < validCoats.length; ++i)
+            {
+                for(let j = 0; j < coats.length; ++j)
+                {
+                    if(coats[j] && validCoats[i].includes(coats[j]))
+                    {
+                        if(savedCoats)
+                        {
+                           savedCoats.push(validCoats[i]);
+                           coats[j] = null;
+                           break;
+                        }
+                    }
+                }
+            }
+
+            //Adds all valid colors to the Filters
+            if(savedCoats && savedCoats.length > 0)
+            {
+                param += '&coat='
+                for(let i = 0; i < (savedCoats.length - 1); ++i)
+                {
+                    param += `${savedCoats[i]},`;
+                }
+                param += `${savedCoats[savedCoats.length - 1]}`;
+                console.log(savedCoats);
+            }
+
+            //Adds all invalid colors to the invalidData dictionary
+            if(!savedCoats || savedCoats.length != coats.length)
+            {
+                coats.forEach(coat=>{
+                    if(!coat)
+                        invalidData["Coats"].push(coat);
+                })
+            }
+
             console.log(invalidData);
         }
     }
@@ -480,6 +537,7 @@ function getAnimalTypes()
             console.log("ERROR MESSAGE: ", error.message);
           }
       });
+      return true;
     }catch(error)
     {
       getToken()
