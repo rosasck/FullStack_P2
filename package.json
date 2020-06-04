@@ -1,0 +1,24 @@
+{
+  "name": "FullStack_P2",
+  "version": "1.0.0",
+  "description": "Pet-Tential # Contributers Katie Rosas, Taylor Atkins, Vivian Killian # Deployed Site URL https://pet-tential.herokuapp.com/ # What does Pet-tential do",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rosasck/FullStack_P2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rosasck/FullStack_P2/issues"
+  },
+  "homepage": "https://github.com/rosasck/FullStack_P2#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
