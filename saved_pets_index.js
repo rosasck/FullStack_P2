@@ -1,3 +1,5 @@
+// To precompile this file with babble use the folowing command in the terminal:
+//npx babel --watch src --out-dir . --presets react-app/prod
 
 var petArray = [];
 function addPet(petId) {
@@ -84,7 +86,7 @@ function loadPets(petId) {
         );
         //make this a creae element to append to the root element, This is how we can get 
         //more than one pet on this page :)
-        ReactDOM.render(element, document.getElementById('root'));
+        ReactDOM.render(element, document.getElementById('rootSaved'));
     }).catch(function (error) {
         if (error.code) {
             console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);

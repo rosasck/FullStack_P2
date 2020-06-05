@@ -92,7 +92,7 @@ function loadPets(petId){
            );
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-           ReactDOM.render(element, document.getElementById('root'));
+           ReactDOM.render(element, document.getElementById('rootSaved'));
       })
       .catch(error =>{
         if(error.code){
