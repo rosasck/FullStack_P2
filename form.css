@@ -38,3 +38,16 @@ input[type=text] {
     padding-left: 15px;
 }
 
+@media screen and (max-width: 540px) {
+    .user-settings {
+        width: 400px;
+    }
+
+    .form-group {
+        width: 350px;
+    }
+
+    /* currently the select2 fields are too big and idk how to size them properly
+    since its a plug in... will continue to investigate */
+    
+}
