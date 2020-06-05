@@ -67,6 +67,7 @@ var PetInfo = function (_React$Component) {
     _this.page = 1;
     _this.handleClick = _this.handleClick.bind(_this);
     _this.openPetPage = _this.openPetPage.bind(_this);
+    _this.callSavedPets = _this.callSavedPets.bind(_this);
     /*
         if(!getToken()){
             fetchToken()
@@ -81,7 +82,7 @@ var PetInfo = function (_React$Component) {
         }*/
     if (!localStorage.getItem('token')) {
       getToken().then(_this.handleClick()).catch(function (err) {
-        console.log("ERROR MESSAGE: " + err);
+        console.log("Failed in constructor: " + err);
       });
     } else {
       _this.handleClick();
@@ -186,6 +187,12 @@ var PetInfo = function (_React$Component) {
       window.location.href = "./pet-page.html?id=" + this.state.petId;
     }
   }, {
+    key: "callSavedPets",
+    value: function callSavedPets() {
+      addPet(this.newId);
+      this.handleClick();
+    }
+  }, {
     key: "render",
     value: function render() {
       return React.createElement(
@@ -217,7 +224,7 @@ var PetInfo = function (_React$Component) {
         ),
         React.createElement(
           "a",
-          { className: "btn", href: "#", onClick: this.handleClick },
+          { className: "btn", href: "#", onClick: this.callSavedPets },
           React.createElement("i", { className: "fas fa-heart fa-5x" })
         )
       );
