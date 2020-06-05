@@ -1,3 +1,5 @@
+// To precompile this file with babble use the folowing command in the terminal:
+//npx babel --watch src --out-dir . --presets react-app/prod
 
 var petArray = [];
 function addPet(petId) {

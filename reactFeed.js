@@ -81,7 +81,7 @@ var PetInfo = function (_React$Component) {
         }*/
     if (!localStorage.getItem('token')) {
       getToken().then(_this.handleClick()).catch(function (err) {
-        console.log("ERROR MESSAGE: " + err);
+        console.log("Failed in constructor: " + err);
       });
     } else {
       _this.handleClick();
