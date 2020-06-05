@@ -35,6 +35,7 @@ var petPic = {
   marginTop: 20,
   borderRadius: 8,
   width: 400,
+  height: 400,
   objectFit: "cover"
 };
 var petInfo = {
