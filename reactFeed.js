@@ -48,6 +48,7 @@ var petData = {
   backgroundColor: "#FBC4AB"
 };
 
+
 var PetInfo = function (_React$Component) {
   _inherits(PetInfo, _React$Component);
 
@@ -204,8 +205,8 @@ var PetInfo = function (_React$Component) {
             "div",
             { style: petInfo, className: "pet-info" },
             React.createElement(
-              "h1",
-              { style: petData },
+              "div",
+              { className: "title-small", style: petData },
               this.state.name
             ),
             React.createElement(
