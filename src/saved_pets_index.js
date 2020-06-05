@@ -14,6 +14,14 @@ function addPet(petId){
  // allPets();
 }
 
+const el=(
+  <div >
+    <h1>Your Saved Pets </h1>
+  </div>
+);
+ReactDOM.render(el, document.getElementById("rootSa"));
+
+
 //import {setPetID, loadPet  } from "./pet-page.js";
 const card = {
   display: 'flex',
@@ -100,7 +108,9 @@ function loadPets(petId){
            let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            let name = pet.name ? pet.name : "Unknown";
 
-           const element = (
+
+/*
+           const element =(
                <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
                    <img style={petPic} src = {image} className = "pet-pic"/>
                    <div style={petInfo}  className = "pet-info-more">
@@ -109,11 +119,34 @@ function loadPets(petId){
                </div>
            );
 
+           var element = React.createElement(
+            'div',
+            { style: card, className: 'card', onClick: function onClick() {
+                return openPetPageForPet(petId);
+              } },
+            React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
+            React.createElement('div',{ style: petInfo, className: 'pet-info-more' },
+            React.createElement('h1',null,name)
+            )
+          )
 
+             var element=React.createElement('div',
+             React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
+            React.createElement('div',{ style: petInfo, className: 'pet-info-more' },
+            React.createElement('h1',null,name)
+            )
+          );
+
+            var element= document.createTextNode("Name " + name + " Link: ");
+            var p= document.createElement('p');
+            p.innerHTML = 'Website: <a href="http://example.com" title="http://example.com">http://example.com</a>.';
+
+             document.getElementById("rootSa").appendChild(element);
+             //ReactDOM.render(element, element);
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-           ReactDOM.render(element, document.getElementById("rootS"));
-
+         //  ReactDOM.render(element, document.getElementById("rootS"));
+*/
 
       })
       .catch(error =>{
@@ -136,6 +169,7 @@ function loadPets(petId){
 function allPets(){
 
  petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
+ if(petArray == null) return;
  petArray.forEach(element => {
    console.log("displaying the pets" + element);
    loadPets(element);
