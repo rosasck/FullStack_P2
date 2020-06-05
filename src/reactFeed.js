@@ -194,7 +194,7 @@ class PetInfo extends React.Component {
         <div style={card} className="card" onClick={this.openPetPage}>
           <img style={petPic} src={this.state.image} alt="A pet" />
           <div style={petInfo} className="pet-info">
-            <h1 style={petData}>{this.state.name}</h1>
+            <div className= "title-small" style={petData}>{this.state.name}</div>
             <p style={petData}>{this.state.description}</p>
           </div>
         </div>

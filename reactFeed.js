@@ -214,8 +214,8 @@ var PetInfo = function (_React$Component) {
             "div",
             { style: petInfo, className: "pet-info" },
             React.createElement(
-              "h1",
-              { style: petData },
+              "div",
+              { className: "title-small", style: petData },
               this.state.name
             ),
             React.createElement(
