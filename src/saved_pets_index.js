@@ -97,7 +97,7 @@ function loadPets(petId){
   }})
   .then(response=>{return response.json();})
   .then(data=>
-      {
+   {
         if(data.status)
         {
             const error = new Error(data.title);
