@@ -104,26 +104,20 @@ function loadPets(petId) {
     var image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
     var name = pet.name ? pet.name : "Unknown";
 
-    var element = React.createElement(
-      'div',
-      { style: card, className: 'card', onClick: function onClick() {
-          return openPetPageForPet(petId);
-        } },
-      React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
-      React.createElement(
-        'div',
-        { style: petInfo, className: 'pet-info-more' },
-        React.createElement(
-          'h1',
-          null,
-          name
-        )
-      )
-    );
-
-    //   var e = document.getElementById("rootSa");
-    //  e.appendChild(element);
-
+    /*
+    
+               const element =(
+                   <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
+                       <img style={petPic} src = {image} className = "pet-pic"/>
+                       <div style={petInfo}  className = "pet-info-more">
+                           <h1>{name}</h1>
+                       </div>
+                   </div>
+               );
+    
+                //   var e = document.getElementById("rootSa");
+                 //  e.appendChild(element);
+    */
     /*
                var element = React.createElement(
                 'div',
@@ -142,17 +136,23 @@ function loadPets(petId) {
                 React.createElement('h1',null,name)
                 )
               );
-    
-                var element= document.createTextNode("Name " + name + " Link: ");
-                var p= document.createElement('p');
-                p.innerHTML = 'Website: <a href="http://example.com" title="http://example.com">http://example.com</a>.';
-    
-                 document.getElementById("rootSa").appendChild(element);
-                 //ReactDOM.render(element, element);
-               //make this a creae element to append to the root element, This is how we can get 
-               //more than one pet on this page :)
-               */
-    ReactDOM.render(element, document.getElementById("rootS"));
+    */
+    var element = document.createTextNode("Name:  " + name);
+    var p = document.createElement('p');
+    // var el= document.createTextNode("PetPage: <a href='#' onclick='openPetPageForPet("+petId+")'> </a>");
+    p.innerHTML = 'Pet Page: <a href=\'./pet-page.html?id=' + petId + '\' >Click Here</a>';
+    var h = petId;
+    //p.innerHTML = 'Pet Page: <a href="#" onclick ="openPetPageForPet(h);">Click Here</a>';
+    console.log(p);
+
+    document.getElementById("rootSa").appendChild(element);
+
+    // document.getElementById("rootSa").appendChild(el);
+    document.getElementById("rootSa").appendChild(p);
+    //ReactDOM.render(element, element);
+    //make this a creae element to append to the root element, This is how we can get 
+    //more than one pet on this page :)
+    //          ReactDOM.render(element, document.getElementById("rootSa"));
   }).catch(function (error) {
     if (error.code && error.code != 401) {
       console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);
