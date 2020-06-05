@@ -43,6 +43,7 @@ const petData = {
   backgroundColor: "#FBC4AB",
 };
 
+let newId=0;
 class PetInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -83,7 +84,7 @@ class PetInfo extends React.Component {
   }
   //Loads a pet's info into the feed
   handleClick() {
-    let newImage, newName, newDesc, newId;
+    let newImage, newName, newDesc;
 
     let token = localStorage.getItem('token');
 
@@ -178,6 +179,8 @@ class PetInfo extends React.Component {
   }
 
   callSavedPets(){
+    console.log("Adding a pet to saved pets")
+   console.log(newId);
    addPet(this.newId);
     this.handleClick();
   }

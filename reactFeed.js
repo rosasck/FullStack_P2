@@ -48,6 +48,8 @@ var petData = {
   backgroundColor: "#FBC4AB"
 };
 
+var newId = 0;
+
 var PetInfo = function (_React$Component) {
   _inherits(PetInfo, _React$Component);
 
@@ -99,8 +101,7 @@ var PetInfo = function (_React$Component) {
 
       var newImage = void 0,
           newName = void 0,
-          newDesc = void 0,
-          newId = void 0;
+          newDesc = void 0;
 
       var token = localStorage.getItem('token');
 
@@ -189,6 +190,8 @@ var PetInfo = function (_React$Component) {
   }, {
     key: "callSavedPets",
     value: function callSavedPets() {
+      console.log("Adding a pet to saved pets");
+      console.log(newId);
       addPet(this.newId);
       this.handleClick();
     }

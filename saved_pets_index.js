@@ -2,6 +2,7 @@
 //npx babel --watch src --out-dir . --presets react-app/prod
 
 var petArray = [];
+
 function addPet(petId) {
     petArray.push(petId);
 }
@@ -43,16 +44,21 @@ var petData = {
 
 var id = 0;
 
+//Function to Open up the Pet page with more information about the
+//saved Pet
 function openPetPageForPet(petID) {
     window.location.href = './pet-page.html?id=' + petID;
 }
 
+//Function responsible for getting the pet with the PETid from the API 
+//this allows us to keep track of saved pets:) 
 function loadPets(petId) {
 
     id = petId;
     var petIDUrl = 'https://api.petfinder.com/v2/animals/' + id;
     var token = localStorage.getItem('token');
 
+    //this allows us to get the token validated from the API 
     if (!token) {
         getToken().then(function (response) {
             token = localStorage.getItem('token');
@@ -63,9 +69,13 @@ function loadPets(petId) {
     fetch(petIDUrl, {
         headers: {
             'Authorization': 'Bearer ' + token
-        } }).then(function (response) {
+        } })
+    //actual response with the pet 
+    .then(function (response) {
         return response.json();
-    }).then(function (data) {
+    })
+    //parsing the data! 
+    .then(function (data) {
         if (data.status) {
             var error = new Error(data.title);
             error.code = data.status;
@@ -87,13 +97,15 @@ function loadPets(petId) {
                 React.createElement(
                     'h1',
                     null,
+                    '>',
                     name
                 )
             )
         );
+
         //make this a creae element to append to the root element, This is how we can get 
         //more than one pet on this page :)
-        ReactDOM.render(element, document.getElementById('rootSaved'));
+        ReactDOM.render(element, document.getElementById('rootS'));
     }).catch(function (error) {
         if (error.code) {
             console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);
@@ -109,16 +121,17 @@ function loadPets(petId) {
     });
 }
 
+//goes through the saved pets array and displays them :) 
 function allPets() {
     petArray.forEach(function (element) {
         loadPets(element);
-        console.log(element);
     });
 }
-addPet(47929706);
+
+//TESTING Animals :) 
+//addPet(47929706);
 addPet(47567601);
 addPet(47058934);
-//addPet(48097357);
-allPets();
+addPet(48097357);
 
-//loadPets(48097357);
+//allPets();
