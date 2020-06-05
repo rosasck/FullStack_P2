@@ -5,6 +5,7 @@ var petArray=[];
 
 
 function addPet(petId){
+  console.log("pet added to saved pets");
   petArray.push(petId);
 }
 
@@ -94,7 +95,7 @@ function loadPets(petId){
                <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
                    <img style={petPic} src = {image} className = "pet-pic"/>
                    <div style={petInfo}  className = "pet-info-more">
-                       <h1>>{name}</h1>
+                       <h1>{name}</h1>
                    </div>
                </div>
            );
@@ -102,7 +103,7 @@ function loadPets(petId){
 
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-           ReactDOM.render(element, document.getElementById('rootS'));
+           ReactDOM.render(element, document.getElementById("rootS"));
 
 
       })
@@ -125,15 +126,16 @@ function loadPets(petId){
 //goes through the saved pets array and displays them :) 
 function allPets(){
  petArray.forEach(element => {
+   console.log("displaying the pets");
    loadPets(element);
   });
 }
 
 //TESTING Animals :) 
 //addPet(47929706);
-addPet(47567601);
-addPet(47058934);
-addPet(48097357);
+//addPet(47567601);
+//addPet(47058934);
+//addPet(48097357);
 
-//allPets();
+allPets();
 
