@@ -13,13 +13,12 @@ function addPet(petId){
 
  // allPets();
 }
-
-const el=(
-  <div >
-    <h1>Your Saved Pets </h1>
-  </div>
-);
-ReactDOM.render(el, document.getElementById("rootSa"));
+var p= document.createElement("p");
+var n= document.createTextNode("Cuties");
+p.appendChild(n);
+var e = document.getElementById("rootSa");
+e.appendChild(p);
+//ReactDOM.render(p, document.getElementById("rootSa"));
 
 
 //import {setPetID, loadPet  } from "./pet-page.js";
@@ -87,8 +86,9 @@ function loadPets(petId){
           console.log(`ERROR MESSAGE: ${err}`);
       });
   }
-  console.log(token);
-  console.log(petIDUrl);
+  //this was for testing token and petID 
+  //console.log(token);
+  //console.log(petIDUrl);
 
 
      fetch(petIDUrl, {
@@ -147,7 +147,6 @@ function loadPets(petId){
            //more than one pet on this page :)
          //  ReactDOM.render(element, document.getElementById("rootS"));
 */
-
       })
       .catch(error =>{
         if(error.code){
@@ -165,15 +164,15 @@ function loadPets(petId){
  
     }
     
-//goes through the saved pets array and displays them :) 
+//goes through the saved pets array and displays them and call the load pet function 
 function allPets(){
 
  petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
+
  if(petArray == null) return;
+
  petArray.forEach(element => {
-   console.log("displaying the pets" + element);
    loadPets(element);
-   console.log("pet should be displayed");
    console.log(petArray);
   });
 }
