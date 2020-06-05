@@ -2,7 +2,9 @@
 //npx babel --watch src --out-dir . --presets react-app/prod
 
 var petArray = [];
+//localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
 
+//this adds a pet to the local storage for the user 
 function addPet(petId) {
 
   petArray = JSON.parse(localStorage.getItem('savedPetsArray'));
@@ -12,11 +14,13 @@ function addPet(petId) {
 
   // allPets();
 }
-var p = document.createElement("p");
-var n = document.createTextNode("Cuties");
+/*
+var p= document.createElement("p");
+var n= document.createTextNode("Cuties");
 p.appendChild(n);
 var e = document.getElementById("rootSa");
-e.appendChild(p);
+*/
+//e.appendChild(p);
 //ReactDOM.render(p, document.getElementById("rootSa"));
 
 
@@ -100,16 +104,27 @@ function loadPets(petId) {
     var image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
     var name = pet.name ? pet.name : "Unknown";
 
+    var element = React.createElement(
+      'div',
+      { style: card, className: 'card', onClick: function onClick() {
+          return openPetPageForPet(petId);
+        } },
+      React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
+      React.createElement(
+        'div',
+        { style: petInfo, className: 'pet-info-more' },
+        React.createElement(
+          'h1',
+          null,
+          name
+        )
+      )
+    );
+
+    //   var e = document.getElementById("rootSa");
+    //  e.appendChild(element);
+
     /*
-               const element =(
-                   <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
-                       <img style={petPic} src = {image} className = "pet-pic"/>
-                       <div style={petInfo}  className = "pet-info-more">
-                           <h1>{name}</h1>
-                       </div>
-                   </div>
-               );
-    
                var element = React.createElement(
                 'div',
                 { style: card, className: 'card', onClick: function onClick() {
@@ -136,8 +151,8 @@ function loadPets(petId) {
                  //ReactDOM.render(element, element);
                //make this a creae element to append to the root element, This is how we can get 
                //more than one pet on this page :)
-             //  ReactDOM.render(element, document.getElementById("rootS"));
-    */
+               */
+    ReactDOM.render(element, document.getElementById("rootS"));
   }).catch(function (error) {
     if (error.code && error.code != 401) {
       console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);
@@ -158,14 +173,19 @@ function allPets() {
 
   petArray = JSON.parse(localStorage.getItem('savedPetsArray'));
 
-  if (petArray == null) return;
-
-  petArray.forEach(function (element) {
-    loadPets(element);
-    console.log(petArray);
-  });
+  if (petArray == null) return;else {
+    petArray.forEach(function (element) {
+      loadPets(element);
+      console.log(petArray);
+    });
+  }
 }
 
+/*
+function clearArray(){
+  localStorage.removeItem('savedPetsArray');
+}
+*/
 //TESTING Animals :) 
 //addPet(47929706);
 //addPet(47567601);

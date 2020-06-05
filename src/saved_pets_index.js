@@ -1,9 +1,10 @@
 // To precompile this file with babble use the folowing command in the terminal:
 //npx babel --watch src --out-dir . --presets react-app/prod
 
-var petArray=[];
+let petArray=[];
+//localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
 
-
+//this adds a pet to the local storage for the user 
 function addPet(petId){
 
   petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
@@ -13,11 +14,13 @@ function addPet(petId){
 
  // allPets();
 }
+/*
 var p= document.createElement("p");
 var n= document.createTextNode("Cuties");
 p.appendChild(n);
 var e = document.getElementById("rootSa");
-e.appendChild(p);
+*/
+//e.appendChild(p);
 //ReactDOM.render(p, document.getElementById("rootSa"));
 
 
@@ -108,7 +111,7 @@ function loadPets(petId){
            let name = pet.name ? pet.name : "Unknown";
 
 
-/*
+
            const element =(
                <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
                    <img style={petPic} src = {image} className = "pet-pic"/>
@@ -118,6 +121,10 @@ function loadPets(petId){
                </div>
            );
 
+            //   var e = document.getElementById("rootSa");
+             //  e.appendChild(element);
+
+/*
            var element = React.createElement(
             'div',
             { style: card, className: 'card', onClick: function onClick() {
@@ -144,8 +151,9 @@ function loadPets(petId){
              //ReactDOM.render(element, element);
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-         //  ReactDOM.render(element, document.getElementById("rootS"));
-*/
+           */
+          ReactDOM.render(element, document.getElementById("rootS"));
+
       })
       .catch(error =>{
         if(error.code && error.code != 401){
@@ -170,13 +178,18 @@ function allPets(){
 
  if(petArray == null) return;
 
- petArray.forEach(element => {
+ else{petArray.forEach(element => {
    loadPets(element);
    console.log(petArray);
   });
 }
+}
 
-
+/*
+function clearArray(){
+  localStorage.removeItem('savedPetsArray');
+}
+*/
 //TESTING Animals :) 
 //addPet(47929706);
 //addPet(47567601);
