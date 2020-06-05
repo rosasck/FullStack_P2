@@ -5,11 +5,21 @@ var petArray=[];
 
 
 function addPet(petId){
-  console.log( "here is the pet id" + petId);
+
+  petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
   console.log("pet added to saved pets");
   petArray.push(petId);
-  //allPets();
+  localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
+
+ // allPets();
 }
+var p= document.createElement("p");
+var n= document.createTextNode("Cuties");
+p.appendChild(n);
+var e = document.getElementById("rootSa");
+e.appendChild(p);
+//ReactDOM.render(p, document.getElementById("rootSa"));
+
 
 //import {setPetID, loadPet  } from "./pet-page.js";
 const card = {
@@ -76,17 +86,17 @@ function loadPets(petId){
           console.log(`ERROR MESSAGE: ${err}`);
       });
   }
-  console.log(token);
-  console.log(petIDUrl);
+  //this was for testing token and petID 
+  //console.log(token);
+  //console.log(petIDUrl);
 
 
-     fetch(petIDUrl, {
-      headers:{
-          'Authorization': `Bearer ${token}`,
+     fetch(petIDUrl, {mode:'no-cors'}, {
+      headers:{'Authorization': `Bearer ${token}`,
   }})
   .then(response=>{return response.json();})
   .then(data=>
-      {
+   {
         if(data.status)
         {
             const error = new Error(data.title);
@@ -97,7 +107,9 @@ function loadPets(petId){
            let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            let name = pet.name ? pet.name : "Unknown";
 
-           const element = (
+
+/*
+           const element =(
                <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
                    <img style={petPic} src = {image} className = "pet-pic"/>
                    <div style={petInfo}  className = "pet-info-more">
@@ -106,19 +118,41 @@ function loadPets(petId){
                </div>
            );
 
+           var element = React.createElement(
+            'div',
+            { style: card, className: 'card', onClick: function onClick() {
+                return openPetPageForPet(petId);
+              } },
+            React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
+            React.createElement('div',{ style: petInfo, className: 'pet-info-more' },
+            React.createElement('h1',null,name)
+            )
+          )
 
+             var element=React.createElement('div',
+             React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
+            React.createElement('div',{ style: petInfo, className: 'pet-info-more' },
+            React.createElement('h1',null,name)
+            )
+          );
+
+            var element= document.createTextNode("Name " + name + " Link: ");
+            var p= document.createElement('p');
+            p.innerHTML = 'Website: <a href="http://example.com" title="http://example.com">http://example.com</a>.';
+
+             document.getElementById("rootSa").appendChild(element);
+             //ReactDOM.render(element, element);
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-           ReactDOM.render(element, document.getElementById("rootS"));
-
-
+         //  ReactDOM.render(element, document.getElementById("rootS"));
+*/
       })
       .catch(error =>{
-        if(error.code){
+        if(error.code && error.code != 401){
              console.log(`AHHHH ERROR STATUS: ${error.code} ERROR MESSAGE: ${error.message}`);
         }
         //If a token is expired, gets new authorization token & re-runs the function.
-        else if(error.message.includes("Failed to fetch") || error.message.includes("NetworkError"))
+        else if( error.code == 401 || error.message.includes("Failed to fetch") || error.message.includes("NetworkError"))
         {
             getToken().then(loadPets(petId)).catch(err=>{console.log(err);});
         }
@@ -129,14 +163,19 @@ function loadPets(petId){
  
     }
     
-//goes through the saved pets array and displays them :) 
+//goes through the saved pets array and displays them and call the load pet function 
 function allPets(){
+
+ petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
+
+ if(petArray == null) return;
+
  petArray.forEach(element => {
-   console.log("displaying the pets" + element);
    loadPets(element);
-   console.log("pet should be displayed");
+   console.log(petArray);
   });
 }
+
 
 //TESTING Animals :) 
 //addPet(47929706);
@@ -144,5 +183,5 @@ function allPets(){
 //addPet(47058934);
 //addPet(48097357);
 
-//allPets();
+allPets();
 

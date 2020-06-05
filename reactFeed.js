@@ -35,6 +35,7 @@ var petPic = {
   marginTop: 20,
   borderRadius: 8,
   width: 400,
+  height: 400,
   objectFit: "cover"
 };
 var petInfo = {
@@ -148,7 +149,7 @@ var PetInfo = function (_React$Component) {
             });
           }).catch(function (error) {
             //Handles if an authorization token has expired.
-            if (error.message.includes("Failed to fetch")) {
+            if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
               //This calls handleClick multiple times before the getToken finishes for some reason...
               //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
               getToken().then(_this2.handleClick()).catch(function (err) {
