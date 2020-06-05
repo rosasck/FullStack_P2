@@ -55,11 +55,13 @@ function loadPet() {
         //The description needs to be modified to replace
         let desc = pet.description ? formatString(pet.description) : "";
         const element = (
-          <div>
-            <img src={image} className="pet-pic" />
-            <div className="pet-info-more">
-              <h1>{name}</h1>
-              <p>{desc}</p>
+          <div className = "more">
+            <div className="pet-info-container">
+              <img src={image} className="pet-pic" />
+              <div className="pet-info-more">
+                <div className= "title-small">{name}</div>
+                <div className = "more-text">{desc}</div>
+              </div>
             </div>
           </div>
         );
