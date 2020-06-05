@@ -139,11 +139,11 @@ function loadPets(petId) {
              //  ReactDOM.render(element, document.getElementById("rootS"));
     */
   }).catch(function (error) {
-    if (error.code) {
+    if (error.code && error.code != 401) {
       console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);
     }
     //If a token is expired, gets new authorization token & re-runs the function.
-    else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+    else if (error.code == 401 || error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
         getToken().then(loadPets(petId)).catch(function (err) {
           console.log(err);
         });
