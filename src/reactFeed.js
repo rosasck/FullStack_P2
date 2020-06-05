@@ -43,6 +43,7 @@ const petData = {
   backgroundColor: "#FBC4AB",
 };
 
+let newId=0;
 class PetInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -58,6 +59,7 @@ class PetInfo extends React.Component {
     this.page = 1;
     this.handleClick = this.handleClick.bind(this);
     this.openPetPage = this.openPetPage.bind(this);
+    this.callSavedPets= this.callSavedPets.bind(this);
     /*
         if(!getToken()){
             fetchToken()
@@ -82,7 +84,7 @@ class PetInfo extends React.Component {
   }
   //Loads a pet's info into the feed
   handleClick() {
-    let newImage, newName, newDesc, newId;
+    let newImage, newName, newDesc;
 
     let token = localStorage.getItem('token');
 
@@ -176,6 +178,13 @@ class PetInfo extends React.Component {
     window.location.href = `./pet-page.html?id=${this.state.petId}`;
   }
 
+  callSavedPets(){
+    console.log("Adding a pet to saved pets")
+   console.log(newId);
+   addPet(this.newId);
+    this.handleClick();
+  }
+
   render() {
     return (
       <div className="feed">
@@ -189,7 +198,7 @@ class PetInfo extends React.Component {
             <p style={petData}>{this.state.description}</p>
           </div>
         </div>
-        <a className="btn" href="#" onClick={this.handleClick}>
+        <a className="btn" href="#" onClick={this.callSavedPets}>  
           <i className="fas fa-heart fa-5x"></i>
         </a>
       </div>

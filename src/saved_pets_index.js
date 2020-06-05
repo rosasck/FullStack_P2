@@ -2,7 +2,10 @@
 //npx babel --watch src --out-dir . --presets react-app/prod
 
 var petArray=[];
+
+
 function addPet(petId){
+  console.log("pet added to saved pets");
   petArray.push(petId);
 }
 
@@ -16,41 +19,52 @@ const card = {
   textAlign: 'center',
   margin: 25,
   backgroundColor: '#F4978E',
-}
-const picture = {
+};
+const petPic = {
   marginTop: 20,
   borderRadius: 8,
   width: 400,
   objectFit: 'cover',
-}
+};
 const info= {
   width: 380,
   borderRadius: 8,
   padding: 15,
   margin: 15,
   backgroundColor: '#FBC4AB',
-}
+};
 const petInfo = {
   width: 380,
   borderRadius: 8,
   padding: 15,
   margin: 15,
   backgroundColor: '#FBC4AB',
-}
+};
 const petData = {
   backgroundColor:'#FBC4AB',
-}
+};
 
 
 
 let id=0;
-function loadPets(petId){
 
+//Function to Open up the Pet page with more information about the
+//saved Pet
+function openPetPageForPet(petID) {
+  window.location.href = `./pet-page.html?id=${petID}`;
+}
+
+
+//Function responsible for getting the pet with the PETid from the API 
+//this allows us to keep track of saved pets:) 
+function loadPets(petId){
 
      id = petId;
      let petIDUrl = `https://api.petfinder.com/v2/animals/${id}`;
      let token = localStorage.getItem('token');
      
+     
+     //this allows us to get the token validated from the API 
      if(!token){
       getToken()
       .then(response=>{token = localStorage.getItem('token');})
@@ -62,12 +76,9 @@ function loadPets(petId){
       headers:{
           'Authorization': `Bearer ${token}`,
   }})
-
-
-
+  //actual response with the pet 
   .then(response=>{return response.json();})
-
-
+  //parsing the data! 
   .then(data=>
       {
         if(data.status)
@@ -80,19 +91,21 @@ function loadPets(petId){
            let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            let name = pet.name ? pet.name : "Unknown";
 
-
-
            const element = (
-               <div>
-                   <img src = {image} className = "pet-pic"/>
-                   <div className = "pet-info-more">
+               <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
+                   <img style={petPic} src = {image} className = "pet-pic"/>
+                   <div style={petInfo}  className = "pet-info-more">
                        <h1>{name}</h1>
                    </div>
                </div>
            );
+
+
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-           ReactDOM.render(element, document.getElementById('root'));
+           ReactDOM.render(element, document.getElementById("rootS"));
+
+
       })
       .catch(error =>{
         if(error.code){
@@ -110,18 +123,19 @@ function loadPets(petId){
  
     }
     
-
+//goes through the saved pets array and displays them :) 
 function allPets(){
  petArray.forEach(element => {
+   console.log("displaying the pets");
    loadPets(element);
-   console.log(element);
   });
 }
-addPet(47929706);
-addPet(47567601);
-addPet(47058934);
+
+//TESTING Animals :) 
+//addPet(47929706);
+//addPet(47567601);
+//addPet(47058934);
 //addPet(48097357);
+
 allPets();
 
-
-//loadPets(48097357);
