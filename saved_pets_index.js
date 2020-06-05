@@ -7,6 +7,7 @@ function addPet(petId) {
     console.log("here is the pet id" + petId);
     console.log("pet added to saved pets");
     petArray.push(petId);
+    //allPets();
 }
 
 //import {setPetID, loadPet  } from "./pet-page.js";
@@ -57,6 +58,8 @@ function openPetPageForPet(petID) {
 function loadPets(petId) {
 
     id = petId;
+
+    //let petIDUrl = `https://api.petfinder.com/v2/animals/48097357`;
     var petIDUrl = "https://api.petfinder.com/v2/animals/" + id;
     var token = localStorage.getItem('token');
 
@@ -68,16 +71,15 @@ function loadPets(petId) {
             console.log("ERROR MESSAGE: " + err);
         });
     }
+    console.log(token);
+    console.log(petIDUrl);
+
     fetch(petIDUrl, {
         headers: {
             'Authorization': "Bearer " + token
-        } })
-    //actual response with the pet 
-    .then(function (response) {
+        } }).then(function (response) {
         return response.json();
-    })
-    //parsing the data! 
-    .then(function (data) {
+    }).then(function (data) {
         if (data.status) {
             var error = new Error(data.title);
             error.code = data.status;
@@ -125,8 +127,9 @@ function loadPets(petId) {
 //goes through the saved pets array and displays them :) 
 function allPets() {
     petArray.forEach(function (element) {
-        console.log("displaying the pets");
+        console.log("displaying the pets" + element);
         loadPets(element);
+        console.log("pet should be displayed");
     });
 }
 
