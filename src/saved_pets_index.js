@@ -5,6 +5,7 @@ var petArray=[];
 
 
 function addPet(petId){
+  console.log( "here is the pet id" + petId);
   console.log("pet added to saved pets");
   petArray.push(petId);
 }
@@ -137,5 +138,5 @@ function allPets(){
 //addPet(47058934);
 //addPet(48097357);
 
-allPets();
+//allPets();
 

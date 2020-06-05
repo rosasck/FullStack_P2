@@ -181,7 +181,7 @@ class PetInfo extends React.Component {
   callSavedPets(){
     console.log("Adding a pet to saved pets")
    console.log(newId);
-   addPet(this.newId);
+    addPet(newId);
     this.handleClick();
   }
 
