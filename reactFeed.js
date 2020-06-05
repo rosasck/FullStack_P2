@@ -192,7 +192,7 @@ var PetInfo = function (_React$Component) {
     value: function callSavedPets() {
       console.log("Adding a pet to saved pets");
       console.log(newId);
-      addPet(this.newId);
+      addPet(newId);
       this.handleClick();
     }
   }, {
