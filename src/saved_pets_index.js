@@ -5,10 +5,13 @@ var petArray=[];
 
 
 function addPet(petId){
-  console.log( "here is the pet id" + petId);
+
+  petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
   console.log("pet added to saved pets");
   petArray.push(petId);
-  //allPets();
+  localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
+
+ // allPets();
 }
 
 //import {setPetID, loadPet  } from "./pet-page.js";
@@ -131,12 +134,16 @@ function loadPets(petId){
     
 //goes through the saved pets array and displays them :) 
 function allPets(){
+
+ petArray=JSON.parse(localStorage.getItem('savedPetsArray'));
  petArray.forEach(element => {
    console.log("displaying the pets" + element);
    loadPets(element);
    console.log("pet should be displayed");
+   console.log(petArray);
   });
 }
+
 
 //TESTING Animals :) 
 //addPet(47929706);
@@ -144,5 +151,5 @@ function allPets(){
 //addPet(47058934);
 //addPet(48097357);
 
-//allPets();
+allPets();
 

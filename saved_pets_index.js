@@ -4,10 +4,13 @@
 var petArray = [];
 
 function addPet(petId) {
-    console.log("here is the pet id" + petId);
+
+    petArray = JSON.parse(localStorage.getItem('savedPetsArray'));
     console.log("pet added to saved pets");
     petArray.push(petId);
-    //allPets();
+    localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
+
+    // allPets();
 }
 
 //import {setPetID, loadPet  } from "./pet-page.js";
@@ -50,7 +53,7 @@ var id = 0;
 //Function to Open up the Pet page with more information about the
 //saved Pet
 function openPetPageForPet(petID) {
-    window.location.href = "./pet-page.html?id=" + petID;
+    window.location.href = './pet-page.html?id=' + petID;
 }
 
 //Function responsible for getting the pet with the PETid from the API 
@@ -60,7 +63,7 @@ function loadPets(petId) {
     id = petId;
 
     //let petIDUrl = `https://api.petfinder.com/v2/animals/48097357`;
-    var petIDUrl = "https://api.petfinder.com/v2/animals/" + id;
+    var petIDUrl = 'https://api.petfinder.com/v2/animals/' + id;
     var token = localStorage.getItem('token');
 
     //this allows us to get the token validated from the API 
@@ -68,7 +71,7 @@ function loadPets(petId) {
         getToken().then(function (response) {
             token = localStorage.getItem('token');
         }).catch(function (err) {
-            console.log("ERROR MESSAGE: " + err);
+            console.log('ERROR MESSAGE: ' + err);
         });
     }
     console.log(token);
@@ -76,7 +79,7 @@ function loadPets(petId) {
 
     fetch(petIDUrl, {
         headers: {
-            'Authorization': "Bearer " + token
+            'Authorization': 'Bearer ' + token
         } }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -90,16 +93,16 @@ function loadPets(petId) {
         var name = pet.name ? pet.name : "Unknown";
 
         var element = React.createElement(
-            "div",
-            { style: card, className: "card", onClick: function onClick() {
+            'div',
+            { style: card, className: 'card', onClick: function onClick() {
                     return openPetPageForPet(petId);
                 } },
-            React.createElement("img", { style: petPic, src: image, className: "pet-pic" }),
+            React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
             React.createElement(
-                "div",
-                { style: petInfo, className: "pet-info-more" },
+                'div',
+                { style: petInfo, className: 'pet-info-more' },
                 React.createElement(
-                    "h1",
+                    'h1',
                     null,
                     name
                 )
@@ -111,7 +114,7 @@ function loadPets(petId) {
         ReactDOM.render(element, document.getElementById("rootS"));
     }).catch(function (error) {
         if (error.code) {
-            console.log("AHHHH ERROR STATUS: " + error.code + " ERROR MESSAGE: " + error.message);
+            console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);
         }
         //If a token is expired, gets new authorization token & re-runs the function.
         else if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
@@ -126,10 +129,13 @@ function loadPets(petId) {
 
 //goes through the saved pets array and displays them :) 
 function allPets() {
+
+    petArray = JSON.parse(localStorage.getItem('savedPetsArray'));
     petArray.forEach(function (element) {
         console.log("displaying the pets" + element);
         loadPets(element);
         console.log("pet should be displayed");
+        console.log(petArray);
     });
 }
 
@@ -139,4 +145,4 @@ function allPets() {
 //addPet(47058934);
 //addPet(48097357);
 
-//allPets();
+allPets();
