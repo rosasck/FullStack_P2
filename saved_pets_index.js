@@ -17,7 +17,7 @@ var card = {
     margin: 25,
     backgroundColor: '#F4978E'
 };
-var picture = {
+var petPic = {
     marginTop: 20,
     borderRadius: 8,
     width: 400,
@@ -42,6 +42,11 @@ var petData = {
 };
 
 var id = 0;
+
+function openPetPageForPet(petID) {
+    window.location.href = './pet-page.html?id=' + petID;
+}
+
 function loadPets(petId) {
 
     id = petId;
@@ -72,11 +77,13 @@ function loadPets(petId) {
 
         var element = React.createElement(
             'div',
-            null,
-            React.createElement('img', { src: image, className: 'pet-pic' }),
+            { style: card, className: 'card', onClick: function onClick() {
+                    return openPetPageForPet(petId);
+                } },
+            React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
             React.createElement(
                 'div',
-                { className: 'pet-info-more' },
+                { style: petInfo, className: 'pet-info-more' },
                 React.createElement(
                     'h1',
                     null,

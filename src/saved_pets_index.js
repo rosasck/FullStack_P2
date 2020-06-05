@@ -16,34 +16,40 @@ const card = {
   textAlign: 'center',
   margin: 25,
   backgroundColor: '#F4978E',
-}
-const picture = {
+};
+const petPic = {
   marginTop: 20,
   borderRadius: 8,
   width: 400,
   objectFit: 'cover',
-}
+};
 const info= {
   width: 380,
   borderRadius: 8,
   padding: 15,
   margin: 15,
   backgroundColor: '#FBC4AB',
-}
+};
 const petInfo = {
   width: 380,
   borderRadius: 8,
   padding: 15,
   margin: 15,
   backgroundColor: '#FBC4AB',
-}
+};
 const petData = {
   backgroundColor:'#FBC4AB',
-}
+};
 
 
 
 let id=0;
+
+
+function openPetPageForPet(petID) {
+  window.location.href = `./pet-page.html?id=${petID}`;
+}
+
 function loadPets(petId){
 
 
@@ -62,12 +68,7 @@ function loadPets(petId){
       headers:{
           'Authorization': `Bearer ${token}`,
   }})
-
-
-
   .then(response=>{return response.json();})
-
-
   .then(data=>
       {
         if(data.status)
@@ -83,9 +84,9 @@ function loadPets(petId){
 
 
            const element = (
-               <div>
-                   <img src = {image} className = "pet-pic"/>
-                   <div className = "pet-info-more">
+               <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
+                   <img style={petPic} src = {image} className = "pet-pic"/>
+                   <div style={petInfo}  className = "pet-info-more">
                        <h1>{name}</h1>
                    </div>
                </div>
