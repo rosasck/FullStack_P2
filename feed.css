@@ -41,10 +41,13 @@
     background-color: #FBC4AB;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 680px) {
     .feed {
         flex-direction: column;
     }
+
+    /* TODO: the card stuff must be edited on the 
+    reactfeed.js it seems... */
 
     .card {
         width: 300px;
@@ -56,5 +59,19 @@
 
     .pet-info {
         width: 230px;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .card {
+        width: 250px;
+    }
+
+    .pet-pic {
+        width: 230px;
+    }
+
+    .pet-info {
+        width: 200px;
     }
 }
