@@ -4,6 +4,7 @@ function formatString(toFormat) {
   toFormat = toFormat.replace(/&#039;/g, "'");
   toFormat = toFormat.replace(/&quot;/g, '"');
   toFormat = toFormat.replace(/&#34;/g, '"');
+  toFormat = toFormat.replace(/&amp;amp;/g, "&");
   toFormat = toFormat.replace(/&amp;/g, "&");
   toFormat = toFormat.replace(/&#38;/g, "&");
   toFormat = toFormat.replace(/&gt;/g, ">");

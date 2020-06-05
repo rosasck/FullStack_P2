@@ -1,4 +1,7 @@
-function test() {
+loadFilters();
+
+function test()
+{
     var zipcode = document.getElementById("zipcode").value;
     var distance = document.getElementById("distance").value;
     var type = document.getElementById("type").value;
@@ -28,10 +31,145 @@ function test() {
     + " breeds: " + breed + " colors: " + color + " coats: " + coat);
 }
 
-//NEED FUNCTION TO LOAD SAVED FILTERS FROM PARAMETERS
+//Clears filters saved in local storage
+function clearFilters(){
+    localStorage.removeItem('parameters');
+    localStorage.removeItem('savedFilters');
+}
 
-async function updateFilters() {
+//NEED FUNCTION TO LOAD SAVED FILTERS FROM PARAMETERS
+function loadFilters(){
+    let param =localStorage.getItem('savedFilters');
+    if(param){
+        param = param.split('&');
+        param.shift();
+        param.forEach(parameter=>{
+            let filters = parameter.split('=');
+            let filterType = filters[0];
+            filters = filters[1].split(',');
+            switch(filterType)
+            {
+                case "location":
+                    document.getElementById("zipcode").value = filters[0];
+                    break;
+                case "distance":
+                    document.getElementById("distance").value = filters[0];
+                    break;
+                case "type":
+                    document.getElementById("type").value = filters[0];
+                    break;
+                case "gender":
+                    document.getElementById("gender").value = filters[0];
+                    break;
+                case "size":
+                    document.getElementById("size").value = filters[0];
+                    break;
+                case "age":
+                    document.getElementById("age").value = filters[0];
+                    break;
+                case "breed":
+                    filters.forEach(filter=>{
+                        filter = decodeURIComponent(filter);
+                        var newOption = new Option(filter, filter, true, true);
+                        $("#breed").append(newOption).trigger('change');
+                    })
+                    break;
+                case "color":
+                    filters.forEach(filter=>{
+                        filter = decodeURIComponent(filter);
+                        var newOption = new Option(filter, filter, true, true);
+                        $("#color").append(newOption).trigger('change');
+                    })
+                    break;
+                case "coat":
+                    filters.forEach(filter=>{
+                        filter = decodeURIComponent(filter);
+                        var newOption = new Option(filter, filter, true, true);
+                        $("#coat").append(newOption).trigger('change');
+                    })
+                    break;
+                case "good_with_cats":
+                    document.getElementById("good_with_cats").checked = true;
+                    break;
+                case "good_with_dogs":
+                    document.getElementById("good_with_dogs").checked = true;
+                    break;
+                case "good_with_children":
+                    document.getElementById("good_with_children").checked = true;
+                    break;
+
+            }
+        })
+    }
+}
+
+//Message to alert the user that the filters have been set
+//Right now it just shows the message in an alert box.
+//To change this, just edit line 101.
+function submissionMessage(invalidData, zipcode)
+{
+    let message;
+
+    if(!invalidData && zipcode && zipcode.length != 5)
+    {
+        message = "The filters have been updated, but the following data is invalid! It will not be added as a filter.";
+        message += `Zipcode: ${zipcode} `;
+    }
+    else if(invalidData)
+    {
+        if(invalidData["Breeds"].length > 0 || invalidData["Colors"].length > 0 || invalidData["Coats"].length > 0 || (zipcode && zipcode.length != 5))
+        {
+            message = "The filters have been updated, but the following data is invalid! They will not be added as filters. ";
+            if(zipcode && zipcode.length != 5)
+            {
+                message += `Zipcode: ${zipcode} `;
+            }
+
+            if(invalidData["Breeds"].length > 0)
+            {
+                message += 'Breeds: '
+                for(let i = 0; i < invalidData["Breeds"].length -1; ++i)
+                {
+                    message += `${invalidData["Breeds"][i]},`;
+                }
+                message += `${invalidData["Breeds"][invalidData["Breeds"].length - 1]} `;
+                
+            }
+
+            if(invalidData["Colors"].length > 0)
+            {
+                message += 'Colors: '
+                for(let i = 0; i < invalidData["Colors"].length -1; ++i)
+                {
+                    message += `${invalidData["Colors"][i]},`;
+                }
+                message += `${invalidData["Colors"][invalidData["Colors"].length - 1]} `;
+                
+            }
+
+            if(invalidData["Coats"].length > 0)
+            {
+                message += 'Coats: '
+                for(let i = 0; i < invalidData["Coats"].length -1; ++i)
+                {
+                    message += `${invalidData["Coats"][i]},`;
+                }
+                message += `${invalidData["Coats"][invalidData["Coats"].length - 1]} `;
+            }
+        }
+        else
+            message = "The filters have been updated!";
+    }
+    else
+        message = "The filters have been updated!";
+
+    //EDIT THIS LINE IF YOU WANT TO CHANGE HOW THE MESSAGE IS DISPLAYED
+    alert(message);
+}
+
+function updateFilters() {
     let param = "";
+    let savedFilters = "";
 
     /*zipcode & distance should probably pair together*/
     //Veryify zipcode is 5 characters
@@ -39,9 +177,7 @@ async function updateFilters() {
     var distance = document.getElementById("distance").value;
     if(zipcode)
     {
-        if(zipcode.length != 5)
-            alert("INVALID ZIPCODE");
-        else
+        if(zipcode.length == 5)
         {
             
             param += `&location=${zipcode}`;
@@ -73,14 +209,19 @@ async function updateFilters() {
     if(good_with_children)
         param += `&good_with_children=${good_with_children}`
 
+    savedFilters = param;
+
     //Look up possible animals & add them 
     var type = document.getElementById("type").value;
 
     // array of serach items is returned for breed, color, coat
     //Validate through API
+    //console.log($('#breed').select2('data'));
     var breeds = $('#breed').val();
     var colors = $('#color').val();
     var coats = $('#coat').val();
+    console.log(breeds);
+    console.log(breeds[0]);
 
     const getAnimalTypeURL = "https://api.petfinder.com/v2/types";
     let token = localStorage.getItem('token');
@@ -115,6 +256,7 @@ async function updateFilters() {
                 case "Dog":
 
                     param += "&type=Dog";
+                    savedFilters += "&type=Dog";
                     allowedValues = validData[0];
 
                     if(!allowedValues)
@@ -123,13 +265,15 @@ async function updateFilters() {
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -142,11 +286,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -155,6 +302,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -163,21 +312,25 @@ async function updateFilters() {
                     break;
                 case "Cat":
                     param += "&type=Cat";
+                    savedFilters += "&type=Cat";
                     allowedValues = validData[1];
 
+                    
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -190,11 +343,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -203,6 +359,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -211,7 +369,9 @@ async function updateFilters() {
                     break;
                 case "Rabbit":
                     param += '&type=Rabbit';
+                    savedFilters += "&type=Rabbit";
                     allowedValues = validData[2];
+
 
                     if(!allowedValues)
                     {
@@ -219,13 +379,15 @@ async function updateFilters() {
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -238,11 +400,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -251,6 +416,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -259,21 +426,25 @@ async function updateFilters() {
                     break;
                 case "Small & Furry":
                     param += `&type=${encodeURIComponent('Small & Furry')}`;
+                    savedFilters += `&type=${encodeURIComponent('Small & Furry')}`;
                     allowedValues = validData[3];
 
+  
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -286,11 +457,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -299,29 +473,36 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
 
                     }
+
                     break;
                 case "Horse":
                     param += "&type=Horse";
+                    savedFilters += "&type=Horse";
                     allowedValues = validData[4];
 
+                   
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -334,11 +515,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -347,6 +531,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -355,21 +541,25 @@ async function updateFilters() {
                     break;
                 case "Bird":
                     param += '&type=Bird';
+                    savedFilters += "&type=Bird";
                     allowedValues = validData[5];
 
+           
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -382,11 +572,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -395,6 +588,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -403,21 +598,25 @@ async function updateFilters() {
                     break;
                 case "Scales, Fins & Other":
                     param += `&type=${encodeURIComponent('Scales, Fins & Other')}`;
+                    savedFilters += `&type=${encodeURIComponent('Scales, Fins & Other')}`;
                     allowedValues = validData[6];
 
+                 
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -430,11 +629,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -443,6 +645,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -451,20 +655,24 @@ async function updateFilters() {
                     break;
                 case "Barnyard":
                     param += '&type=Barnyard';
+                    savedFilters += '&type=Barnyard';
                     allowedValues = validData[7];
+  
                     if(!allowedValues)
                     {
                         alert("We are not able to validate any colors, breeds, or coats selected at this time. They will not be added as filters.")
                     }
                     else
                     {
-                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param);
+                        let returnVal = validateColor(allowedValues.colors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
-                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param);
+                        returnVal = validateCoat(allowedValues.coats, coats, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
 
                         if(breeds && breeds.length > 0)
                         {
@@ -477,11 +685,14 @@ async function updateFilters() {
                                   return response.json();
                                 })
                                 .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param);
+                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
                                     invalidData = returnVal.invalidData;
                                     param = returnVal.param;
+                                    savedFilters = returnVal.savedFilters;
                                     console.log(param);
                                     localStorage.setItem("parameters", param);
+                                    localStorage.setItem("savedFilters", savedFilters);
+                                    submissionMessage(invalidData, zipcode);
                                     return true;
                                 })
                                 .catch(error=>{console.log(error);});
@@ -490,6 +701,8 @@ async function updateFilters() {
                         {
                             console.log(param);
                             localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
                             return true;
 
                         }
@@ -512,13 +725,15 @@ async function updateFilters() {
                             validColors = validColors.concat(validData[i].colors);
                         }
 
-                        let returnVal = validateColor(validColors, colors, invalidData, param);
-                        invalidData = returnVal.invalidData;
-                        param = returnVal.param
-
-                        returnVal = validateCoat(validCoats, coats, invalidData, param);
+                        let returnVal = validateColor(validColors, colors, invalidData, param, savedFilters);
                         invalidData = returnVal.invalidData;
                         param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
+
+                        returnVal = validateCoat(validCoats, coats, invalidData, param, savedFilters);
+                        invalidData = returnVal.invalidData;
+                        param = returnVal.param;
+                        savedFilters = returnVal.savedFilters;
     
                         if(breeds && breeds.length > 0)
                         {
@@ -532,7 +747,6 @@ async function updateFilters() {
                                 })
                                 .then((data) => {
                                     validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds}`);
 
 
 
@@ -546,7 +760,6 @@ async function updateFilters() {
                                         })
                                         .then((data) => {
                                     validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds}`);
         
         
         
@@ -560,7 +773,6 @@ async function updateFilters() {
                                                 })
                                                 .then((data) => {
                                                     validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds}`);
                 
                 
                 
@@ -575,7 +787,6 @@ async function updateFilters() {
                                                         })
                                                         .then((data) => {
                                                             validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds}`);
                         
                         
                         
@@ -589,7 +800,6 @@ async function updateFilters() {
                                                                 })
                                                                 .then((data) => {
                                                                     validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds}`);
                                 
                                 
                                 
@@ -603,7 +813,6 @@ async function updateFilters() {
                                                                         })
                                                                         .then((data) => {
                                                                             validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds.length}`);
                                         
                                         
                                         
@@ -618,7 +827,6 @@ async function updateFilters() {
                                                                                 })
                                                                                 .then((data) => {
                                                                                     validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds.length}`);
                                                 
                                                 
                                                 
@@ -632,13 +840,15 @@ async function updateFilters() {
                                                                                         })
                                                                                         .then((data) => {
                                                                                             validBreeds = validBreeds.concat(data.breeds);
-                                    console.log(`Display valdBreeds: ${validBreeds.length}`);
-                                                                                            let returnVal = validateBreed(validBreeds, breeds, invalidData, param);
+                                                                                            let returnVal = validateBreed(validBreeds, breeds, invalidData, param, savedFilters);
                                                                                             invalidData = returnVal.invalidData;
                                                                                             param = returnVal.param;
+                                                                                            savedFilters = returnVal.savedFilters;
                                                                                             console.log(param);
                                                                                             localStorage.setItem("parameters", param);
-                                                                                            return true;
+                                                                                            localStorage.setItem("savedFilters", savedFilters);
+                                                                                            submissionMessage(invalidData, zipcode);
+                                                                                                return true;
                                                                                         })
                                                                                         .catch(error=>{console.log(error);});
                                                 
@@ -688,6 +898,17 @@ async function updateFilters() {
 
                                 })
                                 .catch(error=>{console.log(error);});
+
+                        }
+                        else
+                        {
+                            console.log(param);
+                            localStorage.setItem("parameters", param);
+                            localStorage.setItem("savedFilters", savedFilters);
+                            submissionMessage(invalidData, zipcode);
+                            loadFilters();
+                            clearFilters();
+                            return true;
 
                         }
                             /*function getAllBreeds(validBreeds, validData, index)
@@ -795,18 +1016,19 @@ async function updateFilters() {
 function formatCapitilization(array){
     for(let i = 0; i< array.length; ++i)
     {
-        array[i] = formatString(array[i]);
+        array[i] = array[i].trim();
         array[i] = array[i].toLowerCase();
         array[i] = array[i].charAt(0).toUpperCase() + array[i].substr(1);
         for(let j = 0; j < array[i].length -1; ++j)
         {
             if(array[i].charAt(j) == ' ')
-                array[i] = array[i].charAt(j+1).toUpperCase() + array[i].substr(j + 2);
+                array[i] = array[i].substr(0, j + 1) + array[i].charAt(j+1).toUpperCase() + array[i].substr(j + 2);
         }
     }
     return array;
 }
-function validateBreed(validBreeds, breeds, invalidData, param)
+
+function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
 { 
     let savedBreeds = [];
     let foundBreeds = [];
@@ -850,12 +1072,22 @@ function validateBreed(validBreeds, breeds, invalidData, param)
             //Adds all valid colors to the Filters
             if(savedBreeds && savedBreeds.length > 0)
             {
-                param += '&breed='
+                param += '&breed=';
                 for(let i = 0; i < (savedBreeds.length - 1); ++i)
                 {
                     param += `${savedBreeds[i]},`;
                 }
                 param += `${savedBreeds[savedBreeds.length - 1]}`;
+            }
+
+            if(foundBreeds && foundBreeds.length > 0)
+            {
+                savedFilters += '&breed=';
+                for(let i = 0; i < (foundBreeds.length - 1); ++i)
+                {
+                    savedFilters += `${foundBreeds[i]},`;
+                }
+                savedFilters += `${foundBreeds[foundBreeds.length - 1]}`;
             }
 
             //Adds all invalid colors to the invalidData dictionary
@@ -873,10 +1105,10 @@ function validateBreed(validBreeds, breeds, invalidData, param)
             console.log(invalidData);
         }
     }
-    return {invalidData, param};
+    return {invalidData, param, savedFilters};
 }
 
-function validateColor(validColors, colors, invalidData, param)
+function validateColor(validColors, colors, invalidData, param, savedFilters)
 { 
     let savedColors = [];
     let foundColors = [];
@@ -928,6 +1160,16 @@ function validateColor(validColors, colors, invalidData, param)
                 param += `${savedColors[savedColors.length - 1]}`;
             }
 
+            if(foundColors && foundColors.length > 0)
+            {
+                savedFilters += '&color='
+                for(let i = 0; i < (foundColors.length - 1); ++i)
+                {
+                    savedFilters += `${foundColors[i]},`;
+                }
+                savedFilters += `${foundColors[foundColors.length - 1]}`;
+            }
+
             //Adds all invalid colors to the invalidData dictionary
             if(!foundColors || foundColors.length != colors.length)
             {
@@ -943,10 +1185,10 @@ function validateColor(validColors, colors, invalidData, param)
             console.log(invalidData);
         }
     }
-    return {invalidData, param};
+    return {invalidData, param, savedFilters};
 }
 
-function validateCoat(validCoats, coats, invalidData, param)
+function validateCoat(validCoats, coats, invalidData, param, savedFilters)
 { 
     let savedCoats = [];
 
@@ -983,11 +1225,14 @@ function validateCoat(validCoats, coats, invalidData, param)
             if(savedCoats && savedCoats.length > 0)
             {
                 param += '&coat='
+                savedFilters += '&coat='
                 for(let i = 0; i < (savedCoats.length - 1); ++i)
                 {
                     param += `${savedCoats[i]},`;
+                    savedFilters += `${savedCoats[i]},`;
                 }
                 param += `${savedCoats[savedCoats.length - 1]}`;
+                savedFilters += `${savedCoats[savedCoats.length - 1]}`;
                 console.log(savedCoats);
             }
 
@@ -995,7 +1240,7 @@ function validateCoat(validCoats, coats, invalidData, param)
             if(!savedCoats || savedCoats.length != coats.length)
             {
                 coats.forEach(coat=>{
-                    if(!coat)
+                    if(coat)
                         invalidData["Coats"].push(coat);
                 })
             }
@@ -1003,7 +1248,7 @@ function validateCoat(validCoats, coats, invalidData, param)
             console.log(invalidData);
         }
     }
-    return {invalidData, param};
+    return {invalidData, param, savedFilters};
 }
    
 //Function to see all the possible animal types. Just used for planning validation

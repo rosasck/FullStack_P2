@@ -12,7 +12,7 @@
           maximumSelectionLength: 5,
           tags: true,
           placeholder: "Enter search terms",
-          tokenSeparators: [',', ' '],
+          tokenSeparators: [',', '&#13;'],
           theme: "flat"
         });
       });
@@ -173,6 +173,7 @@
         <!--<button type="submit" class="btn btn-outline-danger btn-sm" onclick = "test()">Update Filters</button>
         <button type="submit" class="btn btn-outline-danger btn-sm" onclick = "return updateFilters()">Update Filters</button>-->
         <button type="button" class="btn btn-outline-danger btn-sm" onclick = "return updateFilters()">Update Filters</button>
+        <button type="clear" class="btn btn-outline-danger btn-sm" onclick = "return clearFilters()">Clear All</button>
 
       </form>
     </section>
