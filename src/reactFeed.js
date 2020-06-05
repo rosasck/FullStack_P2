@@ -6,6 +6,8 @@ import {fetchToken} from './authorizationKey'
 import {getToken} from './authorizationKey'
 */
 let baseAnimalUrl;
+//let petArray=[]
+//localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
 let param = localStorage.getItem('parameters');
 if(param)
   baseAnimalUrl = `https://api.petfinder.com/v2/animals?sort=recent&status=adoptable${param}`;
@@ -212,7 +214,7 @@ class PetInfo extends React.Component {
         <div style={card} className="card" onClick={this.openPetPage}>
           <img style={petPic} src={this.state.image} alt="A pet" />
           <div style={petInfo} className="pet-info">
-            <h1 style={petData}>{this.state.name}</h1>
+            <div className= "title-small" style={petData}>{this.state.name}</div>
             <p style={petData}>{this.state.description}</p>
           </div>
         </div>

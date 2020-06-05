@@ -14,6 +14,8 @@ import {fetchToken} from './authorizationKey'
 import {getToken} from './authorizationKey'
 */
 var baseAnimalUrl = void 0;
+//let petArray=[]
+//localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
 var param = localStorage.getItem('parameters');
 if (param) baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=recent&status=adoptable" + param;else baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=recent&status=adoptable";
 
@@ -230,8 +232,8 @@ var PetInfo = function (_React$Component) {
             "div",
             { style: petInfo, className: "pet-info" },
             React.createElement(
-              "h1",
-              { style: petData },
+              "div",
+              { className: "title-small", style: petData },
               this.state.name
             ),
             React.createElement(
