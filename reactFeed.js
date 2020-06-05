@@ -49,6 +49,8 @@ var petData = {
   backgroundColor: "#FBC4AB"
 };
 
+var newId = 0;
+
 var PetInfo = function (_React$Component) {
   _inherits(PetInfo, _React$Component);
 
@@ -68,6 +70,7 @@ var PetInfo = function (_React$Component) {
     _this.page = 1;
     _this.handleClick = _this.handleClick.bind(_this);
     _this.openPetPage = _this.openPetPage.bind(_this);
+    _this.callSavedPets = _this.callSavedPets.bind(_this);
     /*
         if(!getToken()){
             fetchToken()
@@ -99,8 +102,7 @@ var PetInfo = function (_React$Component) {
 
       var newImage = void 0,
           newName = void 0,
-          newDesc = void 0,
-          newId = void 0;
+          newDesc = void 0;
 
       var token = localStorage.getItem('token');
 
@@ -187,6 +189,14 @@ var PetInfo = function (_React$Component) {
       window.location.href = "./pet-page.html?id=" + this.state.petId;
     }
   }, {
+    key: "callSavedPets",
+    value: function callSavedPets() {
+      console.log("Adding a pet to saved pets");
+      console.log(newId);
+      addPet(newId);
+      this.handleClick();
+    }
+  }, {
     key: "render",
     value: function render() {
       return React.createElement(
@@ -218,7 +228,7 @@ var PetInfo = function (_React$Component) {
         ),
         React.createElement(
           "a",
-          { className: "btn", href: "#", onClick: this.handleClick },
+          { className: "btn", href: "#", onClick: this.callSavedPets },
           React.createElement("i", { className: "fas fa-heart fa-5x" })
         )
       );

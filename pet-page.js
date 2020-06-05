@@ -58,20 +58,24 @@ function loadPet() {
         var desc = pet.description ? formatString(pet.description) : "";
         var element = React.createElement(
           "div",
-          null,
-          React.createElement("img", { src: image, className: "pet-pic" }),
+          { className: "more" },
           React.createElement(
             "div",
-            { className: "pet-info-more" },
+            { className: "pet-info-container" },
+            React.createElement("img", { src: image, className: "pet-pic" }),
             React.createElement(
-              "h1",
-              null,
-              name
-            ),
-            React.createElement(
-              "p",
-              null,
-              desc
+              "div",
+              { className: "pet-info-more" },
+              React.createElement(
+                "div",
+                { className: "title-small" },
+                name
+              ),
+              React.createElement(
+                "div",
+                { className: "more-text" },
+                desc
+              )
             )
           )
         );
