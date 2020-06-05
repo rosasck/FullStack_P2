@@ -44,6 +44,12 @@ const petData = {
 
 
 let id=0;
+
+
+function openPetPageForPet(petID) {
+  window.location.href = `./pet-page.html?id=${petID}`;
+}
+
 function loadPets(petId){
 
 
@@ -62,12 +68,7 @@ function loadPets(petId){
       headers:{
           'Authorization': `Bearer ${token}`,
   }})
-
-
-
   .then(response=>{return response.json();})
-
-
   .then(data=>
       {
         if(data.status)
@@ -83,7 +84,7 @@ function loadPets(petId){
 
 
            const element = (
-               <div>
+               <div onClick={()=> openPetPageForPet(petId)}>
                    <img src = {image} className = "pet-pic"/>
                    <div className = "pet-info-more">
                        <h1>{name}</h1>

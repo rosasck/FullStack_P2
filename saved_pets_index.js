@@ -42,6 +42,11 @@ var petData = {
 };
 
 var id = 0;
+
+function openPetPageForPet(petID) {
+    window.location.href = './pet-page.html?id=' + petID;
+}
+
 function loadPets(petId) {
 
     id = petId;
@@ -72,7 +77,9 @@ function loadPets(petId) {
 
         var element = React.createElement(
             'div',
-            null,
+            { onClick: function onClick() {
+                    return openPetPageForPet(petId);
+                } },
             React.createElement('img', { src: image, className: 'pet-pic' }),
             React.createElement(
                 'div',
