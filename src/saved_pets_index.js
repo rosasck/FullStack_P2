@@ -110,7 +110,7 @@ function loadPets(petId){
            let image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
            let name = pet.name ? pet.name : "Unknown";
 
-
+/*
 
            const element =(
                <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
@@ -123,7 +123,7 @@ function loadPets(petId){
 
             //   var e = document.getElementById("rootSa");
              //  e.appendChild(element);
-
+*/
 /*
            var element = React.createElement(
             'div',
@@ -142,17 +142,24 @@ function loadPets(petId){
             React.createElement('h1',null,name)
             )
           );
-
-            var element= document.createTextNode("Name " + name + " Link: ");
+*/
+            var element= document.createTextNode("Name:  " + name);
             var p= document.createElement('p');
-            p.innerHTML = 'Website: <a href="http://example.com" title="http://example.com">http://example.com</a>.';
+           // var el= document.createTextNode("PetPage: <a href='#' onclick='openPetPageForPet("+petId+")'> </a>");
+           p.innerHTML = `Pet Page: <a href='./pet-page.html?id=${petId}' >Click Here</a>`;
+           let h=petId;
+            //p.innerHTML = 'Pet Page: <a href="#" onclick ="openPetPageForPet(h);">Click Here</a>';
+            console.log(p);
+            
 
              document.getElementById("rootSa").appendChild(element);
+
+            // document.getElementById("rootSa").appendChild(el);
+             document.getElementById("rootSa").appendChild(p);
              //ReactDOM.render(element, element);
            //make this a creae element to append to the root element, This is how we can get 
            //more than one pet on this page :)
-           */
-          ReactDOM.render(element, document.getElementById("rootS"));
+//          ReactDOM.render(element, document.getElementById("rootSa"));
 
       })
       .catch(error =>{
