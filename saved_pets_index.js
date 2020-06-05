@@ -12,17 +12,13 @@ function addPet(petId) {
 
   // allPets();
 }
+var p = document.createElement("p");
+var n = document.createTextNode("Cuties");
+p.appendChild(n);
+var e = document.getElementById("rootSa");
+e.appendChild(p);
+//ReactDOM.render(p, document.getElementById("rootSa"));
 
-var el = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    'Your Saved Pets '
-  )
-);
-ReactDOM.render(el, document.getElementById("rootSa"));
 
 //import {setPetID, loadPet  } from "./pet-page.js";
 var card = {
@@ -85,8 +81,10 @@ function loadPets(petId) {
       console.log('ERROR MESSAGE: ' + err);
     });
   }
-  console.log(token);
-  console.log(petIDUrl);
+  //this was for testing token and petID 
+  //console.log(token);
+  //console.log(petIDUrl);
+
 
   fetch(petIDUrl, {
     headers: {
@@ -156,15 +154,15 @@ function loadPets(petId) {
   });
 }
 
-//goes through the saved pets array and displays them :) 
+//goes through the saved pets array and displays them and call the load pet function 
 function allPets() {
 
   petArray = JSON.parse(localStorage.getItem('savedPetsArray'));
+
   if (petArray == null) return;
+
   petArray.forEach(function (element) {
-    console.log("displaying the pets" + element);
     loadPets(element);
-    console.log("pet should be displayed");
     console.log(petArray);
   });
 }
