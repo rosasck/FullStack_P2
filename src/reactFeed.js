@@ -85,6 +85,7 @@ class PetInfo extends React.Component {
   }
   //Loads a pet's info into the feed
   handleClick() {
+    if(this.state.petId !== null){
     let newImage, newName, newDesc;
 
     let token = localStorage.getItem('token');
@@ -99,7 +100,6 @@ class PetInfo extends React.Component {
 
       //Makes a GET request for that page.
       try{
-
       fetch(animalUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -112,7 +112,19 @@ class PetInfo extends React.Component {
           //Checks if there are any more animals to display
           //If not, there will also be no more pages to look through.
           /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
-          if (!data.animals || data.animals.length === 0) throw new Error("No Animals");
+          console.log(data);
+          if (!data.animals) 
+            throw new Error(`Status Code: ${data.status}   Failed to Fetch`);
+          else if(data.animals.length === 0) 
+          {
+            this.setState((state) => ({
+              image: "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg",
+              name: "No Pets Found",
+              description: "Try changing you filters in the settings page.",
+              petId: null,
+            }));
+            throw new Error("No Animals");
+          }
 
           this.petArray = data.animals;
           this.index = 0;
@@ -135,9 +147,10 @@ class PetInfo extends React.Component {
         })
         .catch((error) => {
           //Handles if an authorization token has expired.
-          if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")){
+          if (error.message.includes("Status Code: 401   Failed to Fetch")){
             //This calls handleClick multiple times before the getToken finishes for some reason...
             //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
+            console.log(error.message);
             getToken()
               .then(this.handleClick())
               .catch((err) => {
@@ -174,16 +187,20 @@ class PetInfo extends React.Component {
       }));
     }
   }
+  }
 
   openPetPage() {
-    window.location.href = `./pet-page.html?id=${this.state.petId}`;
+    if(this.state.petId)
+      window.location.href = `./pet-page.html?id=${this.state.petId}`;
   }
 
   callSavedPets(){
+    if(newId){
     console.log("Adding a pet to saved pets")
    console.log(newId);
     addPet(newId);
     this.handleClick();
+    }
   }
 
   render() {
