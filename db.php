@@ -1,5 +1,13 @@
 <?php 
 /*
+
+KEEP THIS CODE! THIS IS INCASE WE TURN THIS INTO A FULL ON BACKEND DB 
+AND NOT JUST FUNCTIONS TO COMMUNICATE WITH THE DB!!!
+ 
+Original plan was to have a full on backend in php and then i realizwd
+i didnt need it but will be helpful for the CORS proxy server! 
+
+
 $username= "vdenscfzdhznxf";
 $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
 $databasename="dbpdnfp0icj490";
@@ -12,11 +20,17 @@ or die("could not connect");
 if($connection->connect_error){
         die("Connection failed: ".$connection->connect_error);
 }
-//table names
+
+//table names in our heroku databse 
 //Pet- petID
 //Users- userID
 //petUserRel- petID, userID
 */
+
+
+
+
+//Function to insert a pet into the DB 
 function petDBInsert($petid){
     $username= "vdenscfzdhznxf";
     $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
@@ -39,6 +53,7 @@ function petDBInsert($petid){
 }
 
 
+//function to insert a user in our DB 
 function userDBInsert($userid){
     $username= "vdenscfzdhznxf";
     $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
@@ -63,6 +78,7 @@ pg_close($connection);
 }
 
 
+//function to create a relationship within the user and saved pet :) 
 function petUserRelInsert($userid, $petid){
     $username= "vdenscfzdhznxf";
     $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
@@ -84,6 +100,9 @@ function petUserRelInsert($userid, $petid){
      pg_close($connection);
 }
 
+
+
+//get rows in saved pets to know how many react elements we will spawn 
 function getRowsInSavedPets(){
     $username= "vdenscfzdhznxf";
     $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
@@ -106,6 +125,8 @@ function getRowsInSavedPets(){
  
 }
 
+
+//return all saved pets in the DB for a user 
 function petDBQuery(){//once i get the userID working.. pass in $userid
     $username= "vdenscfzdhznxf";
     $password ="cc6bad208940188079d2533af5e46e724ba9ad0b06502f314c8b26a538a80a68";
@@ -146,44 +167,5 @@ function petDBQuery(){//once i get the userID working.. pass in $userid
     
      pg_close($connection);
 }
-//$query= "SELECT * FROM spy.agent;";
-
-/*
-$query= "SELECT $select FROM $from WHERE $where;";
-
-
-$result= pg_query($connection, $query)
-        or die("Query error: " .pg_last_error());
-
-        $numrows = pg_num_rows($result);
-        echo"number of rows: ".$numrows;
         
-        $numfields= pg_num_fields($result);
-        echo"number of fields: ".$numfields;
-        
-        while($i < $numfields)
-        {
-                $fieldName= pg_field_name($result, $i); 
-                echo"".$fieldName;
-                echo "<br>";
-                $i = $i+1;
-        };
-        
-while($row = pg_fetch_row($result))
-{
-        $i=0;
-
-      echo "Row info : ";
-        while($i < $numfields)
-        {
-                $current_value=$row[$i]; 
-               echo "".$current_value;
-                echo "<br>";
-                $i=$i+1;
-
-        }
-        pg_free_result($result);
-
-    };
-    */
 ?>
