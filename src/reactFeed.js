@@ -101,6 +101,7 @@ class PetInfo extends React.Component {
       //Makes a GET request for that page.
       try{
       fetch(animalUrl, {
+        mode: "cors",
         headers: {
           Authorization: `Bearer ${token}`,
         },
