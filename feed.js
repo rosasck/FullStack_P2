@@ -1,3 +1,7 @@
+
+
+//this function signs out a user to the google sign in 
+//this allows the connection to google to time out!
 function signOut() {
     localStorage.removeItem('parameters');
     localStorage.removeItem('savedFilters');
