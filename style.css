@@ -36,6 +36,14 @@ header {
     padding-left: 8px;
 }
 
+.title-smallest {
+    font-family: "Carosello"; 
+    font-weight: lighter;
+    color: #997B66;
+    font-size: 30px;
+    padding-left: 8px;
+}
+
 .nav-buttons {
     margin-left: auto;
 }
