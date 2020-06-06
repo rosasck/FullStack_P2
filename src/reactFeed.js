@@ -1,11 +1,6 @@
-//import 'bootstrap/dist/css/bootstrap.min.css';
-/*
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {fetchToken} from './authorizationKey'
-import {getToken} from './authorizationKey'
-*/
 let baseAnimalUrl;
+
+//If the user has added filters, adds the filters to the search
 let param = localStorage.getItem('parameters');
 if(param)
   baseAnimalUrl = `https://api.petfinder.com/v2/animals?sort=recent&status=adoptable${param}`;
@@ -75,14 +70,16 @@ class PetInfo extends React.Component {
         }*/
     if (!localStorage.getItem('token')) {
       getToken()
-        .then(this.handleClick())
-        .catch((err) => {
-          console.log(`Failed in constructor: ${err}`);
-        });
-    } else {
+      .then(this.handleClick())
+      .catch((err) => {
+        console.log(`Failed in constructor: ${err}`);
+      });
+    } 
+    else {
       this.handleClick();
     }
   }
+
   //Loads a pet's info into the feed
   handleClick() {
     if(this.state.petId !== null){
@@ -112,7 +109,6 @@ class PetInfo extends React.Component {
         .then((data) => {
           //Checks if there are any more animals to display
           //If not, there will also be no more pages to look through.
-          /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
           console.log(data);
           if (!data.animals) 
             throw new Error(`Status Code: ${data.status}   Failed to Fetch`);
@@ -175,7 +171,6 @@ class PetInfo extends React.Component {
         ? pet.photos[0].medium
         : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
       newName = pet.name ? formatString(pet.name) : "Unknown";
-      //The description needs to be modified to replace
       newDesc = pet.description ? formatString(pet.description) : "";
       newId = pet.id;
       ++this.index;
@@ -190,11 +185,13 @@ class PetInfo extends React.Component {
   }
   }
 
+  //Opens Individual Pet Page
   openPetPage() {
     if(this.state.petId)
       window.location.href = `./pet-page.html?id=${this.state.petId}`;
   }
 
+  //Saves Pet
   callSavedPets(){
     if(newId){
     console.log("Adding a pet to saved pets")

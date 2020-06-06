@@ -6,14 +6,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//import 'bootstrap/dist/css/bootstrap.min.css';
-/*
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {fetchToken} from './authorizationKey'
-import {getToken} from './authorizationKey'
-*/
 var baseAnimalUrl = void 0;
+
+//If the user has added filters, adds the filters to the search
 var param = localStorage.getItem('parameters');
 if (param) baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=recent&status=adoptable" + param;else baseAnimalUrl = "https://api.petfinder.com/v2/animals?sort=recent&status=adoptable";
 
@@ -92,6 +87,7 @@ var PetInfo = function (_React$Component) {
     }
     return _this;
   }
+
   //Loads a pet's info into the feed
 
 
@@ -127,7 +123,6 @@ var PetInfo = function (_React$Component) {
             }).then(function (data) {
               //Checks if there are any more animals to display
               //If not, there will also be no more pages to look through.
-              /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
               console.log(data);
               if (!data.animals) throw new Error("Status Code: " + data.status + "   Failed to Fetch");else if (data.animals.length === 0) {
                 _this2.setState(function (state) {
@@ -181,7 +176,6 @@ var PetInfo = function (_React$Component) {
           var pet = this.petArray[this.index];
           newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
           newName = pet.name ? formatString(pet.name) : "Unknown";
-          //The description needs to be modified to replace
           newDesc = pet.description ? formatString(pet.description) : "";
           newId = pet.id;
           ++this.index;
@@ -197,11 +191,17 @@ var PetInfo = function (_React$Component) {
         }
       }
     }
+
+    //Opens Individual Pet Page
+
   }, {
     key: "openPetPage",
     value: function openPetPage() {
       if (this.state.petId) window.location.href = "./pet-page.html?id=" + this.state.petId;
     }
+
+    //Saves Pet
+
   }, {
     key: "callSavedPets",
     value: function callSavedPets() {
