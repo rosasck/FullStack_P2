@@ -1,8 +1,9 @@
 // To precompile this file with babble use the folowing command in the terminal:
 //npx babel --watch src --out-dir . --presets react-app/prod
 
+
+//this is used for the local storage array 
 var petArray = [];
-//localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
 
 //this adds a pet to the local storage for the user 
 function addPet(petId) {
@@ -11,20 +12,8 @@ function addPet(petId) {
   console.log("pet added to saved pets");
   petArray.push(petId);
   localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
-
-  // allPets();
 }
-/*
-var p= document.createElement("p");
-var n= document.createTextNode("Cuties");
-p.appendChild(n);
-var e = document.getElementById("rootSa");
-*/
-//e.appendChild(p);
-//ReactDOM.render(p, document.getElementById("rootSa"));
 
-
-//import {setPetID, loadPet  } from "./pet-page.js";
 var card = {
   display: 'flex',
   flexDirection: 'column',
@@ -35,6 +24,7 @@ var card = {
   margin: 25,
   backgroundColor: '#F4978E'
 };
+
 var petPic = {
   marginTop: 20,
   borderRadius: 8,
@@ -59,6 +49,7 @@ var petData = {
   backgroundColor: '#FBC4AB'
 };
 
+//petID var used in other functions needed to be global scope 
 var id = 0;
 
 //Function to Open up the Pet page with more information about the
@@ -73,7 +64,6 @@ function loadPets(petId) {
 
   id = petId;
 
-  //let petIDUrl = `https://api.petfinder.com/v2/animals/48097357`;
   var petIDUrl = 'https://api.petfinder.com/v2/animals/' + id;
   var token = localStorage.getItem('token');
 
@@ -85,11 +75,12 @@ function loadPets(petId) {
       console.log('ERROR MESSAGE: ' + err);
     });
   }
+
   //this was for testing token and petID 
   //console.log(token);
   //console.log(petIDUrl);
 
-
+  //This fetches the pet with the given petID 
   fetch(petIDUrl, {
     mode: "cors",
 
@@ -102,72 +93,28 @@ function loadPets(petId) {
       error.code = data.status;
       throw error;
     }
+
+    // info displayed for the pet on the saved pet page 
     var pet = data.animal;
     var image = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
     var name = pet.name ? pet.name : "Unknown";
 
-    /*
-    
-               const element =(
-                   <div style={card} className="card" onClick={()=> openPetPageForPet(petId)}>
-                       <img style={petPic} src = {image} className = "pet-pic"/>
-                       <div style={petInfo}  className = "pet-info-more">
-                           <h1>{name}</h1>
-                       </div>
-                   </div>
-               );
-    
-                //   var e = document.getElementById("rootSa");
-                 //  e.appendChild(element);
-    */
-    /*
-               var element = React.createElement(
-                'div',
-                { style: card, className: 'card', onClick: function onClick() {
-                    return openPetPageForPet(petId);
-                  } },
-                React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
-                React.createElement('div',{ style: petInfo, className: 'pet-info-more' },
-                React.createElement('h1',null,name)
-                )
-              )
-    
-                 var element=React.createElement('div',
-                 React.createElement('img', { style: petPic, src: image, className: 'pet-pic' }),
-                React.createElement('div',{ style: petInfo, className: 'pet-info-more' },
-                React.createElement('h1',null,name)
-                )
-              );
-    */
-    //var element= document.createTextNode("Name:  " + name);
+    //this creates the element that the pet will be displayed on 
     var p = document.createElement('p');
-    //p.innerHTML = ` Pet Name: ${name} <br>  Pet Page: <a href='./pet-page.html?id=${petId}' >Click Here</a>`;
 
+    //this is where the entire saved pets display is created 
     p.innerHTML = ' <img src=' + image + ' width="200px" height="150px"> Pet Name: ' + name + ' <br>  More Info: <a href=\'./pet-page.html?id=' + petId + '\' >Click Here</a>';
+
+    //this is the way the styling worked for the saved pets! 
     p.style.backgroundColor = "#FBC4AB";
-    //p.style.backgroundColor= "#F4978E";
     p.style.width = "200px";
     p.style.borderRadius = "8px";
     p.style.padding = "15px";
     p.style.margin = "15px";
-    // p.style.alignItems="center";
-    //p.style.cssText= "backgroundColor: '#FBC4AB';";
-    //console.log(p);
-    /*
-                width: 380,
-      borderRadius: 8,
-      padding: 15,
-      margin: 15,
-      backgroundColor: '#FBC4AB', 
-    */
-    //document.getElementById("rootSa").appendChild(element);
+    p.style.alignItems = "center";
+    p.style.alignContent = "center";
 
-    // document.getElementById("rootSa").appendChild(el);
     document.getElementById("rootSa").appendChild(p);
-    //ReactDOM.render(element, element);
-    //make this a creae element to append to the root element, This is how we can get 
-    //more than one pet on this page :)
-    //          ReactDOM.render(element, document.getElementById("rootSa"));
   }).catch(function (error) {
     if (error.code && error.code != 401) {
       console.log('AHHHH ERROR STATUS: ' + error.code + ' ERROR MESSAGE: ' + error.message);
@@ -185,26 +132,27 @@ function loadPets(petId) {
 
 //goes through the saved pets array and displays them and call the load pet function 
 function allPets() {
-
+  //grabs the pets from the local storage
   petArray = JSON.parse(localStorage.getItem('savedPetsArray'));
 
-  if (petArray == null) return;else {
-    petArray.forEach(function (element) {
-      loadPets(element);
-      console.log(petArray);
-    });
-  }
+  //makes sure its not null so it doesnt give us issues
+  if (petArray == null) return;
+
+  //goes through thr array and calls load pets on it 
+  else {
+      petArray.forEach(function (element) {
+        loadPets(element);
+        console.log(petArray);
+      });
+    }
 }
 
 /*
+This function was used to clear the array inside of the local storage! 
 function clearArray(){
   localStorage.removeItem('savedPetsArray');
 }
 */
-//TESTING Animals :) 
-//addPet(47929706);
-//addPet(47567601);
-//addPet(47058934);
-//addPet(48097357);
 
+//this is what gets called at the moment this page loads to load all the saved pets 
 allPets();
