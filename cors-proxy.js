@@ -1,3 +1,7 @@
+//ATTEMPT AT CREATING A PROXY WILL FINISH AFTER 
+//FINALS TO MAKE SURE CORS DOESNT FAIL 
+
+
 const express = require('express');
 const request = require('request');
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
