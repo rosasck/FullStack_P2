@@ -102,101 +102,116 @@ var PetInfo = function (_React$Component) {
     value: function handleClick() {
       var _this2 = this;
 
-      var newImage = void 0,
-          newName = void 0,
-          newDesc = void 0;
+      if (this.state.petId !== null) {
+        var newImage = void 0,
+            newName = void 0,
+            newDesc = void 0;
 
-      var token = localStorage.getItem('token');
+        var token = localStorage.getItem('token');
 
-      //Fetches another page of results from API
-      if (!this.petArray || this.index >= this.petArray.length) {
-        //Changes URL for next page of results
-        if (this.petArray) {
-          ++this.page;
-          animalUrl = baseAnimalUrl + ("&page=" + this.page);
-        }
+        //Fetches another page of results from API
+        if (!this.petArray || this.index >= this.petArray.length) {
+          //Changes URL for next page of results
+          if (this.petArray) {
+            ++this.page;
+            animalUrl = baseAnimalUrl + ("&page=" + this.page);
+          }
 
-        //Makes a GET request for that page.
-        try {
+          //Makes a GET request for that page.
+          try {
+            fetch(animalUrl, {
+              headers: {
+                Authorization: "Bearer " + token
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              //Checks if there are any more animals to display
+              //If not, there will also be no more pages to look through.
+              /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
+              console.log(data);
+              if (!data.animals) throw new Error("Status Code: " + data.status + "   Failed to Fetch");else if (data.animals.length === 0) {
+                _this2.setState(function (state) {
+                  return {
+                    image: "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg",
+                    name: "No Pets Found",
+                    description: "Try changing you filters in the settings page.",
+                    petId: null
+                  };
+                });
+                throw new Error("No Animals");
+              }
 
-          fetch(animalUrl, {
-            headers: {
-              Authorization: "Bearer " + token
-            }
-          }).then(function (response) {
-            return response.json();
-          }).then(function (data) {
-            //Checks if there are any more animals to display
-            //If not, there will also be no more pages to look through.
-            /*** TO DO: Decide if the pets should repeat or just stop displaying after there are no more pages ***/
-            if (!data.animals || data.animals.length === 0) throw new Error("No Animals");
+              _this2.petArray = data.animals;
+              _this2.index = 0;
+              var pet = data.animals[_this2.index];
+              newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
+              newName = pet.name ? formatString(pet.name) : "Unknown";
+              //The description needs to be modified to replace
+              newDesc = pet.description ? formatString(pet.description) : "";
+              newId = pet.id;
+              ++_this2.index;
 
-            _this2.petArray = data.animals;
-            _this2.index = 0;
-            var pet = data.animals[_this2.index];
-            newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
-            newName = pet.name ? formatString(pet.name) : "Unknown";
-            //The description needs to be modified to replace
-            newDesc = pet.description ? formatString(pet.description) : "";
-            newId = pet.id;
-            ++_this2.index;
-
-            _this2.setState(function (state) {
-              return {
-                image: newImage,
-                name: newName,
-                description: newDesc,
-                petId: newId
-              };
-            });
-          }).catch(function (error) {
-            //Handles if an authorization token has expired.
-            if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-              //This calls handleClick multiple times before the getToken finishes for some reason...
-              //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
-              getToken().then(_this2.handleClick()).catch(function (err) {
-                console.log("ERROR MESSAGE: " + err);
+              _this2.setState(function (state) {
+                return {
+                  image: newImage,
+                  name: newName,
+                  description: newDesc,
+                  petId: newId
+                };
               });
-            } else {
-              console.log("ERROR MESSAGE: ", error.message);
-            }
-          });
-        } catch (error) {
-          getToken().then(this.handleClick()).catch(function (err) {
-            console.log(err);
+            }).catch(function (error) {
+              //Handles if an authorization token has expired.
+              if (error.message.includes("Status Code: 401   Failed to Fetch")) {
+                //This calls handleClick multiple times before the getToken finishes for some reason...
+                //This needs to be fixed. It is most liky something to do with changing the state in react, but IDK
+                console.log(error.message);
+                getToken().then(_this2.handleClick()).catch(function (err) {
+                  console.log("ERROR MESSAGE: " + err);
+                });
+              } else {
+                console.log("ERROR MESSAGE: ", error.message);
+              }
+            });
+          } catch (error) {
+            getToken().then(this.handleClick()).catch(function (err) {
+              console.log(err);
+            });
+          }
+        } else {
+          var pet = this.petArray[this.index];
+          newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
+          newName = pet.name ? formatString(pet.name) : "Unknown";
+          //The description needs to be modified to replace
+          newDesc = pet.description ? formatString(pet.description) : "";
+          newId = pet.id;
+          ++this.index;
+
+          this.setState(function (state) {
+            return {
+              image: newImage,
+              name: newName,
+              description: newDesc,
+              petId: newId
+            };
           });
         }
-      } else {
-        var pet = this.petArray[this.index];
-        newImage = pet.photos[0] ? pet.photos[0].medium : "https://cdn.clipart.email/dd7ca471f7af2bb0f501a464970b2b1b_kawaii-cute-cat-face-drawing-cuteanimals_360-360.jpeg";
-        newName = pet.name ? formatString(pet.name) : "Unknown";
-        //The description needs to be modified to replace
-        newDesc = pet.description ? formatString(pet.description) : "";
-        newId = pet.id;
-        ++this.index;
-
-        this.setState(function (state) {
-          return {
-            image: newImage,
-            name: newName,
-            description: newDesc,
-            petId: newId
-          };
-        });
       }
     }
   }, {
     key: "openPetPage",
     value: function openPetPage() {
-      window.location.href = "./pet-page.html?id=" + this.state.petId;
+      if (this.state.petId) window.location.href = "./pet-page.html?id=" + this.state.petId;
     }
   }, {
     key: "callSavedPets",
     value: function callSavedPets() {
-      console.log("Adding a pet to saved pets");
-      console.log(newId);
-      addPet(newId);
-      this.handleClick();
+      if (newId) {
+        console.log("Adding a pet to saved pets");
+        console.log(newId);
+        addPet(newId);
+        this.handleClick();
+      }
     }
   }, {
     key: "render",
