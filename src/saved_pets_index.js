@@ -156,6 +156,7 @@ function loadPets(petId){
            p.style.borderRadius="8px";
            p.style.padding="15px";
            p.style.margin="15px";
+          // p.style.alignItems="center";
            //p.style.cssText= "backgroundColor: '#FBC4AB';";
             //console.log(p);
 /*
