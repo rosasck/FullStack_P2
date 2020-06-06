@@ -91,6 +91,8 @@ function loadPets(petId) {
 
 
   fetch(petIDUrl, {
+    mode: "cors",
+
     headers: { 'Authorization': 'Bearer ' + token
     } }).then(function (response) {
     return response.json();
