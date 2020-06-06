@@ -1,3 +1,5 @@
+//Formats a string passed in to get rid of the encoded characters
+//returned from the API
 function formatString(toFormat) {
   toFormat = toFormat.replace(/&nbsp;/g, " ");
   toFormat = toFormat.replace(/&amp;#39;/g, "'");

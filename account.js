@@ -1,3 +1,5 @@
+//Loads filters currently being used into the form
+//(Function defined on line 44)
 loadFilters();
 
 function test()
@@ -37,7 +39,8 @@ function clearFilters(){
     localStorage.removeItem('savedFilters');
 }
 
-//NEED FUNCTION TO LOAD SAVED FILTERS FROM PARAMETERS
+//Loads a users saved filters into the form after returning
+//to the settings page.
 function loadFilters(){
     let param =localStorage.getItem('savedFilters');
     if(param){
@@ -167,14 +170,17 @@ function submissionMessage(invalidData, zipcode)
     alert(message);
 }
 
+//Validates and updated variables in local storage used to represent
+//the filters a user selects for a search.
 function updateFilters() {
     let param = "";
     let savedFilters = "";
 
-    /*zipcode & distance should probably pair together*/
-    //Veryify zipcode is 5 characters
     var zipcode = document.getElementById("zipcode").value;
     var distance = document.getElementById("distance").value;
+
+    //Verifies the zipcode is 5 characters
+    //The distance is only used as a filter if a valid zipcode is recieved
     if(zipcode)
     {
         if(zipcode.length == 5)
@@ -209,31 +215,21 @@ function updateFilters() {
     if(good_with_children)
         param += `&good_with_children=${good_with_children}`
 
+    //Updates savedFilters after the filter values are saved.
     savedFilters = param;
 
     //Look up possible animals & add them 
     var type = document.getElementById("type").value;
 
-    // array of serach items is returned for breed, color, coat
-    //Validate through API
-    //console.log($('#breed').select2('data'));
+    //Array of serach items is returned for breed, color, coat
+    //They all get validated in the try block below.
     var breeds = $('#breed').val();
     var colors = $('#color').val();
     var coats = $('#coat').val();
-    console.log(breeds);
-    console.log(breeds[0]);
 
     const getAnimalTypeURL = "https://api.petfinder.com/v2/types";
     let token = localStorage.getItem('token');
-    /*
-    if(!token)
-    {
-        getToken()
-        .then(token = localStorage.getItem('token');).catch((err)=>{
-            console.log(err);
-            });
-        token = localStorage.getItem('token');
-    }*/
+
     try{
         fetch(getAnimalTypeURL, {
             headers: {
@@ -242,7 +238,8 @@ function updateFilters() {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-                // A dictionary to map the type of data to any invalid data items provided by the user
+
+             // A dictionary to map the type of data to any invalid data items provided by the user
             //This will be used to display an error message of all invalid data provided.
             let invalidData = {
                 Breeds: [],
@@ -251,7 +248,7 @@ function updateFilters() {
             };
             const validData = data.types;
             var allowedValues;
-            console.log(type);
+
             switch(type){
                 case "Dog":
 
@@ -281,22 +278,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -305,11 +302,10 @@ function updateFilters() {
                             localStorage.setItem("savedFilters", savedFilters);
                             submissionMessage(invalidData, zipcode);
                             return true;
-
                         }
-
                     }
                     break;
+
                 case "Cat":
                     param += "&type=Cat";
                     savedFilters += "&type=Cat";
@@ -338,22 +334,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -364,9 +360,9 @@ function updateFilters() {
                             return true;
 
                         }
-
                     }
                     break;
+
                 case "Rabbit":
                     param += '&type=Rabbit';
                     savedFilters += "&type=Rabbit";
@@ -395,22 +391,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -419,11 +415,10 @@ function updateFilters() {
                             localStorage.setItem("savedFilters", savedFilters);
                             submissionMessage(invalidData, zipcode);
                             return true;
-
                         }
-
                     }
                     break;
+
                 case "Small & Furry":
                     param += `&type=${encodeURIComponent('Small & Furry')}`;
                     savedFilters += `&type=${encodeURIComponent('Small & Furry')}`;
@@ -452,22 +447,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -476,12 +471,10 @@ function updateFilters() {
                             localStorage.setItem("savedFilters", savedFilters);
                             submissionMessage(invalidData, zipcode);
                             return true;
-
                         }
-
                     }
-
                     break;
+
                 case "Horse":
                     param += "&type=Horse";
                     savedFilters += "&type=Horse";
@@ -510,22 +503,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -534,11 +527,10 @@ function updateFilters() {
                             localStorage.setItem("savedFilters", savedFilters);
                             submissionMessage(invalidData, zipcode);
                             return true;
-
                         }
-
                     }
                     break;
+
                 case "Bird":
                     param += '&type=Bird';
                     savedFilters += "&type=Bird";
@@ -567,22 +559,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -591,9 +583,7 @@ function updateFilters() {
                             localStorage.setItem("savedFilters", savedFilters);
                             submissionMessage(invalidData, zipcode);
                             return true;
-
                         }
-
                     }
                     break;
                 case "Scales, Fins & Other":
@@ -624,22 +614,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -650,9 +640,9 @@ function updateFilters() {
                             return true;
 
                         }
-
                     }
                     break;
+
                 case "Barnyard":
                     param += '&type=Barnyard';
                     savedFilters += '&type=Barnyard';
@@ -680,22 +670,22 @@ function updateFilters() {
                                 headers: {
                                   Authorization: `Bearer ${token}`,
                                 },
-                              })
-                                .then((response) => {
-                                  return response.json();
-                                })
-                                .then((data) => {
-                                    let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
-                                    invalidData = returnVal.invalidData;
-                                    param = returnVal.param;
-                                    savedFilters = returnVal.savedFilters;
-                                    console.log(param);
-                                    localStorage.setItem("parameters", param);
-                                    localStorage.setItem("savedFilters", savedFilters);
-                                    submissionMessage(invalidData, zipcode);
-                                    return true;
-                                })
-                                .catch(error=>{console.log(error);});
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((data) => {
+                                let returnVal = validateBreed(data.breeds, breeds, invalidData, param, savedFilters);
+                                invalidData = returnVal.invalidData;
+                                param = returnVal.param;
+                                savedFilters = returnVal.savedFilters;
+                                console.log(param);
+                                localStorage.setItem("parameters", param);
+                                localStorage.setItem("savedFilters", savedFilters);
+                                submissionMessage(invalidData, zipcode);
+                                return true;
+                            })
+                            .catch(error=>{console.log(error);});
                         }
                         else
                         {
@@ -709,6 +699,7 @@ function updateFilters() {
 
                     }
                     break;
+
                 default:
                     let validColors = [];
                     let validBreeds = new Array();
@@ -911,80 +902,10 @@ function updateFilters() {
                             return true;
 
                         }
-                            /*function getAllBreeds(validBreeds, validData, index)
-                            {
-                                if(index > 7)
-                                
-                                    return validBreeds;
-                                await fetch(`https://api.petfinder.com${validData[index]._links.breeds.href}`, {
-                                headers: {
-                                    Authorization: `Bearer ${token}`,
-                                },
-                                })
-                                .then((response) => {
-                                    return response.json();
-                                })
-                                .then((data) => {
-                                    validBreeds.concat(data.breeds);
-                                    return getAllBreeds(validBreeds, validData, index + 1);
-                                })
-                                .catch(error=>{console.log(error);
-                                    return null;});
-                                }
-                            }
-                            validBreeds = getAllBreeds(validBreeds, validData, 0);
-                        
-*/
-/*
-                        async function getAllBreeds(validBreeds, validData, invalidData, param){
-                           // return new Promise((resolve, reject)=>{
-
-                                for(let i = 0; i < validData.length; ++i)
-                                {
-                                    let data = await fetch(`https://api.petfinder.com${validData[i]._links.breeds.href}`, {
-                                    headers: {
-                                        Authorization: `Bearer ${token}`,
-                                    }
-                                    });
-
-                                    data = await data.json();
-                                    if(data && data.breeds)
-                                    {
-                                        validBreeds.concat(data.breeds);
-                                    }
-                                    else
-                                    {
-                                        console.log(`ERROR FROM ALL BREEDS: ${data}`);
-                                    }
-                                }
-
-                                let returnVal = validateBreed(validBreeds, breeds, invalidData, param);
-                                invalidData = returnVal.invalidData;
-                                param = returnVal.param;
-                                console.log(param);
-                                localStorage.setItem("parameters", param);
-                                return true;
-
-                            //});
-                        }
-                        getAllBreeds(validBreeds, validData, invalidData, param);
-                    }
-                    else
-                    {
-                        console.log(param);
-                        localStorage.setItem("parameters", param);
-                        return true;
-
-                    }
-                }
-                */
-
                     break;
 
+                }
             }
-        }
-        /*    console.log(param);
-            localStorage.setItem("parameters", param);*/
         })
         .catch((error) => {
             if (error.code) {
@@ -1013,6 +934,7 @@ function updateFilters() {
     }
 }
 
+//Capitilizes the filters to match the API's formatting
 function formatCapitilization(array){
     for(let i = 0; i< array.length; ++i)
     {
@@ -1028,6 +950,10 @@ function formatCapitilization(array){
     return array;
 }
 
+//Searches through the breeds in the validBreeds array and compares them to 
+//the user's breedss in the breed array. Any matching breeds are formatted to
+//add to a url and stored in param & savedFilters. Any invalid data is added
+//the the invalidData object.
 function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
 { 
     let savedBreeds = [];
@@ -1044,11 +970,10 @@ function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
             console.log(validBreeds);
             breeds = formatCapitilization(breeds);
 
-            //Loops through every valid color for the animal type
-            //Anytime a color provided by the user is found to match 
-            //a valid color, is added to the savedColor List.
-            //This continues until there are no more valid colors to compare to.
-            outerLoop:
+            //Loops through every valid breed for the animal type
+            //Anytime a breed provided by the user is found to match 
+            //a valid color, is added to the savedBreed List.
+            //This continues until there are no more valid breeds to compare to.
             for(let i = 0; i < validBreeds.length; ++i)
             {
                 if(validBreeds[i].name.includes(','))
@@ -1062,14 +987,14 @@ function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
                         {
                             let formattedParameter = encodeURIComponent(validBreeds[i].name);
                             savedBreeds.push(formattedParameter);
-                           // savedColors.push(validColors[i]);
                         }
                         if(foundBreeds && !foundBreeds.includes(breeds[j]))
                             foundBreeds.push(breeds[j]);
                     }
                 }
             }
-            //Adds all valid colors to the Filters
+
+            //Adds all valid breeds to the Filters
             if(savedBreeds && savedBreeds.length > 0)
             {
                 param += '&breed=';
@@ -1080,6 +1005,8 @@ function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
                 param += `${savedBreeds[savedBreeds.length - 1]}`;
             }
 
+            //Adds all breeds found to the list of filters provided by 
+            //the user
             if(foundBreeds && foundBreeds.length > 0)
             {
                 savedFilters += '&breed=';
@@ -1090,7 +1017,7 @@ function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
                 savedFilters += `${foundBreeds[foundBreeds.length - 1]}`;
             }
 
-            //Adds all invalid colors to the invalidData dictionary
+            //Adds all invalid breeds to the invalidData dictionary
             if(!foundBreeds || foundBreeds.length != breeds.length)
             {
                 breeds.forEach(breed=>{
@@ -1098,16 +1025,15 @@ function validateBreed(validBreeds, breeds, invalidData, param, savedFilters)
                         invalidData["Breeds"].push(breed);
                 })
             }
-            else
-                console.log(foundBreeds);
-            if(savedBreeds)
-                console.log(savedBreeds);
-            console.log(invalidData);
         }
     }
     return {invalidData, param, savedFilters};
 }
 
+//Searches through the colors in the validColors array and compares them to 
+//the user's colors in the color array. Any matching colors are formatted to
+//add to a url and stored in param & savedFilters. Any invalid data is added
+//the the invalidData object.
 function validateColor(validColors, colors, invalidData, param, savedFilters)
 { 
     let savedColors = [];
@@ -1128,7 +1054,6 @@ function validateColor(validColors, colors, invalidData, param, savedFilters)
             //Anytime a color provided by the user is found to match 
             //a valid color, is added to the savedColor List.
             //This continues until there are no more valid colors to compare to.
-            outerLoop:
             for(let i = 0; i < validColors.length; ++i)
             {
                 if(validColors[i].includes(','))
@@ -1142,7 +1067,6 @@ function validateColor(validColors, colors, invalidData, param, savedFilters)
                         {
                             let formattedParameter = encodeURIComponent(validColors[i]);
                             savedColors.push(formattedParameter);
-                           // savedColors.push(validColors[i]);
                         }
                         if(foundColors && !foundColors.includes(colors[j]))
                             foundColors.push(colors[j]);
@@ -1178,16 +1102,16 @@ function validateColor(validColors, colors, invalidData, param, savedFilters)
                         invalidData["Colors"].push(color);
                 })
             }
-            else
-                console.log(foundColors);
-            if(savedColors)
-                console.log(savedColors);
-            console.log(invalidData);
         }
     }
     return {invalidData, param, savedFilters};
 }
 
+
+//Searches through the coats in the validCoats array and compares them to 
+//the user's coats in the coats array. Any matching coats are formatted to
+//add to a url and stored in param & savedFilters. Any invalid data is added
+//the the invalidData object.
 function validateCoat(validCoats, coats, invalidData, param, savedFilters)
 { 
     let savedCoats = [];
@@ -1221,7 +1145,7 @@ function validateCoat(validCoats, coats, invalidData, param, savedFilters)
                 }
             }
 
-            //Adds all valid colors to the Filters
+            //Adds all valid coats to the Filters
             if(savedCoats && savedCoats.length > 0)
             {
                 param += '&coat='
@@ -1236,7 +1160,7 @@ function validateCoat(validCoats, coats, invalidData, param, savedFilters)
                 console.log(savedCoats);
             }
 
-            //Adds all invalid colors to the invalidData dictionary
+            //Adds all invalid coats to the invalidData dictionary
             if(!savedCoats || savedCoats.length != coats.length)
             {
                 coats.forEach(coat=>{
@@ -1244,8 +1168,6 @@ function validateCoat(validCoats, coats, invalidData, param, savedFilters)
                         invalidData["Coats"].push(coat);
                 })
             }
-
-            console.log(invalidData);
         }
     }
     return {invalidData, param, savedFilters};
