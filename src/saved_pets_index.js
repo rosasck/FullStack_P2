@@ -94,7 +94,9 @@ function loadPets(petId){
   //console.log(petIDUrl);
 
 
-     fetch(petIDUrl, {
+     fetch(petIDUrl,  {
+        mode: "cors",
+
       headers:{'Authorization': `Bearer ${token}`,
   }})
   .then(response=>{return response.json();})
@@ -143,16 +145,27 @@ function loadPets(petId){
             )
           );
 */
-            var element= document.createTextNode("Name:  " + name);
-            var p= document.createElement('p');
-           // var el= document.createTextNode("PetPage: <a href='#' onclick='openPetPageForPet("+petId+")'> </a>");
-           p.innerHTML = `Pet Page: <a href='./pet-page.html?id=${petId}' >Click Here</a>`;
-           let h=petId;
-            //p.innerHTML = 'Pet Page: <a href="#" onclick ="openPetPageForPet(h);">Click Here</a>';
-            console.log(p);
-            
+            //var element= document.createTextNode("Name:  " + name);
+            var p= document.createElement('p' );
+           //p.innerHTML = ` Pet Name: ${name} <br>  Pet Page: <a href='./pet-page.html?id=${petId}' >Click Here</a>`;
 
-             document.getElementById("rootSa").appendChild(element);
+           p.innerHTML = ` <img src=${image} width=\"200px\" height=\"150px\"> Pet Name: ${name} <br>  More Info: <a href='./pet-page.html?id=${petId}' >Click Here</a>`;
+           p.style.backgroundColor="#FBC4AB";
+           //p.style.backgroundColor= "#F4978E";
+           p.style.width="200px";
+           p.style.borderRadius="8px";
+           p.style.padding="15px";
+           p.style.margin="15px";
+           //p.style.cssText= "backgroundColor: '#FBC4AB';";
+            //console.log(p);
+/*
+            width: 380,
+  borderRadius: 8,
+  padding: 15,
+  margin: 15,
+  backgroundColor: '#FBC4AB', 
+*/
+             //document.getElementById("rootSa").appendChild(element);
 
             // document.getElementById("rootSa").appendChild(el);
              document.getElementById("rootSa").appendChild(p);

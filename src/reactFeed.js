@@ -6,8 +6,6 @@ import {fetchToken} from './authorizationKey'
 import {getToken} from './authorizationKey'
 */
 let baseAnimalUrl;
-//let petArray=[]
-//localStorage.setItem('savedPetsArray', JSON.stringify(petArray));
 let param = localStorage.getItem('parameters');
 if(param)
   baseAnimalUrl = `https://api.petfinder.com/v2/animals?sort=recent&status=adoptable${param}`;
@@ -103,6 +101,7 @@ class PetInfo extends React.Component {
       //Makes a GET request for that page.
       try{
       fetch(animalUrl, {
+        mode: "cors",
         headers: {
           Authorization: `Bearer ${token}`,
         },

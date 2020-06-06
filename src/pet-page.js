@@ -29,6 +29,8 @@ function loadPet() {
 
     try{
     fetch(petIDUrl, {
+
+      mode: "cors",
       headers: {
         Authorization: `Bearer ${token}`,
       },
