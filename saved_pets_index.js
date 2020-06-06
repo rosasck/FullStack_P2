@@ -139,8 +139,11 @@ function loadPets(petId) {
     */
     //var element= document.createTextNode("Name:  " + name);
     var p = document.createElement('p');
-    p.innerHTML = ' Pet Name: ' + name + ' <br>  Pet Page: <a href=\'./pet-page.html?id=' + petId + '\' >Click Here</a>';
+    //p.innerHTML = ` Pet Name: ${name} <br>  Pet Page: <a href='./pet-page.html?id=${petId}' >Click Here</a>`;
+
+    p.innerHTML = ' <img src=' + image + ' width="200px" height="150px"> Pet Name: ' + name + ' <br>  More Info: <a href=\'./pet-page.html?id=' + petId + '\' >Click Here</a>';
     p.style.backgroundColor = "#FBC4AB";
+    //p.style.backgroundColor= "#F4978E";
     p.style.width = "200px";
     p.style.borderRadius = "8px";
     p.style.padding = "15px";
